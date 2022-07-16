@@ -1,5 +1,9 @@
 ## Atelier Arduino
 
+![](img/Arduino_uno_r3.jpg)
+
+<small>© Maker Media GmbH – CC BY-SA 4.0</small>
+
 Edgar Bonet
 
 CCSTI Grenoble – 2022-07-28
@@ -25,15 +29,43 @@ moi (physicien, contributeur Open Source), le LOG, la Casemate
 
 ## Arduino : Logiciel
 
-hôte (IDE, cli, cloud), cible (core, bibl. Arduino et tierces)
+<img src="img/ide.png" style="float: right">
+* côté hôte : outils de développement
+  * IDE
+  * arduino-cli
+
+* côté cible : bibliothèques
+  * Arduino core
+  * bibliothèques Arduino
+  * bibliothèques tierces
+
+![](img/arduino-libs.png)
 
 ---
 
 ## Arduino : Communauté
 
-partage (blogs, instructables), entre-aide (forum, stackexchange)
-IRL ?
+* partage (blogs, instructables)  
+  ![](img/arduino-blog.png)
+  ![](img/hackaday.png)
+  ![](img/adafruit.png)
+  ![](img/instructables.png)
+  ...
 
+* entre-aide (forum, stackexchange)  
+  ![](img/arduino-forum.png)
+  ![](img/arduino-se.png)
+  ...
+
+* IRL  
+  ![](img/casemate.png)
+  ...
+
+---
+
+## Téléchargement de l'IDE
+
+![](img/arduino-dl.png)
 
 ---
 
