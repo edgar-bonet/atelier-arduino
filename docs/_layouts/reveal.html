@@ -37,9 +37,28 @@
 		<!--[if lt IE 9]>
 		<script src="{{ site.reveal_path }}lib/js/html5shiv.js"></script>
 		<![endif]-->
+		<style>
+			#size {
+				position: absolute; left: 10px; bottom: 10px;
+				font: 16px sans-serif; color: #999;
+			}
+		</style>
+		<script>
+function print_size() {
+	this.innerHTML = `${window.innerWidth}×${window.innerHeight}`;
+}
+window.addEventListener("load", function() {
+	var size_elt = document.getElementById("size"),
+		closure = print_size.bind(size_elt);
+	closure();
+	window.addEventListener("resize", closure);
+});
+		</script>
 	</head>
 
 	<body>
+
+		<div id="size">---</div>
 
 		<div class="reveal">
 
