@@ -27,6 +27,9 @@ reveal_notes_server: false
 
 # Additional reveal.js options
 reveal_options: 
+  slideNumber: true
+  width: 1920
+  height: 1080
 
 # Additional reveal.js dependencies
 reveal_dependencies: 
