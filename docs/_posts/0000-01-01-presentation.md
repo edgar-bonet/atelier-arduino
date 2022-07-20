@@ -1,8 +1,7 @@
 ## Atelier Arduino
 
-![](img/Arduino_uno_r3.jpg)
-
-<small>© Maker Media GmbH – CC BY-SA 4.0</small>
+![](img/Arduino_uno_r3.jpg)  
+<small>Arduino Uno R3 – © Maker Media GmbH – CC BY-SA 4.0</small>
 
 Edgar Bonet
 
@@ -12,18 +11,38 @@ CCSTI Grenoble – 2022-07-28
 
 ## Présentation
 
-moi (physicien, contributeur Open Source), le LOG, la Casemate
+<img src="img/avatar.jpeg" style="float: right">
+* Edgar Bonet
+  * physicien, spécialisé dans le magnétisme
+  * libriste de longue date
+  * contributeur majeur à [Arduino Stackexchange][ase]
+  * [contributeur occasionnel][pr] à l'écosystème Arduino
+* [Laboratoire Ouvert Grenoblois][log]
+  * hackerspace grenoblois
+  * partage de connaissances et savoir-faire
+* [La Casemate][ccsti]
+  * premier CCSTI créé en France
+  * expositions, rencontres, ateliers, FabLab...
 
-(tour de table de présentations : attentes, expéricene en
-électronique, programmation, C/C++)
+[ase]: https://arduino.stackexchange.com/
+[pr]: https://github.com/pulls?q=author%3Aedgar-bonet+is%3Apr+is%3Amerged+org%3Aadafruit+org%3Aarduino+org%3Aarduino-libraries
+[log]: https://www.logre.eu/
+[ccsti]: https://lacasemate.fr/
 
-(Arduino = matériel + logiciel + communauté)
+Note: Faire tour de table pour se présenter.
+Dire : attentes, expérience en électronique, programmation, C/C++
 
 ---
 
 ## Arduino : Matériel
 
-évolution vers Uno, cartes + puissantes, clones et compatibles
+![](img/Arduino-serial.jpg)  
+<small>Arduino Serial (2005) – © Nicholas Zambetti – CC BY-SA 3.0</small>
+
+* depuis 2005 : cartes classiques AVR, 8 bits
+* cartes plus puissantes à architecture ARM 32 bits
+* clones et contrefaçons
+* cartes tierces plus ou moins compatibles
 
 ---
 
@@ -40,6 +59,8 @@ moi (physicien, contributeur Open Source), le LOG, la Casemate
   * bibliothèques tierces
 
 ![](img/arduino-libs.png)
+
+Note: Aussi : Arduino Web Editor
 
 ---
 
@@ -71,20 +92,41 @@ moi (physicien, contributeur Open Source), le LOG, la Casemate
 
 ## Prise en main de l'IDE
 
-téléchargement (juste montré)
+* configurer :  
+  Fichier → Préférences → Avertissement du compilateur :
+  « Plus » ou « Tout »  
+  ![](img/prefs.png)
 
-Fichier → Préférences → Avertissement du compilateur :
-« Plus » ou « Tout ».
+* charger un programme :  
+  Fichier → Exemples → 01.Basics → Blink
 
-Fichier → Exemples → 01.Basics → Blink
-
-Bouton « Téléverser » (→)
+* téléverser :  
+  Bouton
+  <img src="img/upload-button.png" style="margin: 0 5px; border: 0">
 
 ---
 
-## Exercice : clignoter la LED
+## Faire clignoter la LED
 
-rythme : noire, noire, demi-pause (blanche)
+**Exemple fourni**:
+
+```arduino
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);     // configurer la broche 13 en sortie
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);  // allumer
+  delay(1000);                      // attendre
+  digitalWrite(LED_BUILTIN, LOW);   // éteindre
+  delay(1000);                      // attendre
+}
+```
+
+**Exercice** : modifier le rythme :
+deux flashs, courte pause, deux flashs, courte pause...
+
+Note: rythme : noire, noire, demi-pause (blanche)
 
 ---
 
@@ -104,7 +146,7 @@ entrées (capteurs), décision (logique), sorties (actionneurs)
 
 analogie hydraulique
 
-entrée = circuit ouvert, sortie connection à GND ou Vcc
+entrée = circuit ouvert, sortie connexion à GND ou Vcc
 
 ---
 
@@ -116,7 +158,7 @@ cas dégénérés (R = 0 ou ∞, court-circuit, entrée flottante)
 
 ## Recettes
 
-potard, LDR ou thermistance
+potentiomètre, LDR ou thermistance
 
 bouton (avec ou sans debounce)
 
