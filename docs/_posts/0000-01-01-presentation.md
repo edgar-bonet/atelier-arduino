@@ -5,7 +5,7 @@
 
 Edgar Bonet
 
-CCSTI Grenoble – 2022-07-28
+CCSTI Grenoble – 2022-11-03
 
 ---
 
