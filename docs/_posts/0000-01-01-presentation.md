@@ -160,8 +160,18 @@ Ctrl-T pour indenter.
 ---
 
 ## Schéma générique d'un projet Arduino
-entrées (capteurs), décision (logique), sorties (actionneurs)
-+ communications avec l'hôte
+
+![](img/schema-generique-1.png)
+
+* des organes d'entrée (capteurs)
+* un Arduino pour faire le traitement des données
+* des organes de sortie (actionneurs)
+
+--
+
+![](img/schema-generique-2.png)
+
+* optionnellement, communication avec un ordinateur
 
 ---
 
