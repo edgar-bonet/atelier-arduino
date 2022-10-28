@@ -71,6 +71,7 @@ Note: Aussi : Arduino Web Editor
   ![](img/hackaday.png)
   ![](img/adafruit.png)
   ![](img/instructables.png)
+  ![](img/logo-log.png)
   ...
 
 * entre-aide (forum, stackexchange)  
