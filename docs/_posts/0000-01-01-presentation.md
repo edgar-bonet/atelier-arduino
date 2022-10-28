@@ -44,13 +44,25 @@ Dire : attentes, expérience en électronique, programmation, C/C++
 * clones et contrefaçons
 * cartes tierces plus ou moins compatibles
 
+--
+
+### Utilisations
+
+Une carte Arduino peut être :
+* intégrée définitivement à un projet
+* servir uniquement de plateforme de prototypage ([exemple][])
+
+[exemple]: https://www.phi.kit.edu/jobs_1452.php
+
+Note: Il y a des petites cartes adaptées à l'intégration sur PCB.
+
 ---
 
 ## Arduino : Logiciel
 
 <img src="img/ide.png" style="float: right">
 * côté hôte : outils de développement
-  * IDE
+  * IDE (versions 1.8 et 2.0)
   * arduino-cli
 
 * côté cible : bibliothèques
@@ -127,13 +139,23 @@ void loop() {
 **Exercice** : modifier le rythme :
 deux flashs, courte pause, deux flashs, courte pause...
 
-Note: rythme : noire, noire, demi-pause (blanche)
+Note: Expliquer la syntaxe.
+
+rythme : noire, noire, demi-pause (blanche)
 
 ---
 
 ## Bases de C++
 
-fiche résumé
+Voir pense-bête.
+
+* langage complexe, on se limite à un sous-ensemble simple
+* syntaxe très stricte
+* l'indentation aide à voir la structure du code
+
+Note: Inventer de la syntaxe ne marche pas.
+
+Ctrl-T pour indenter.
 
 ---
 
@@ -187,6 +209,32 @@ moteur (PWM)
 
 Fichier → Exemples → 02.Digital → BlinkWithoutDelay
 
+```arduino
+int etat_LED = LOW;
+
+unsigned long temps_dernier_changement = 0;  // quand a-t-on changé d'état pour la dernière fois ?
+
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  unsigned long maintenant = millis();  // l'heure actuelle
+
+  if (maintenant - temps_dernier_changement >= 400) {  // il est temps de changer d'état
+    temps_dernier_changement = maintenant;
+
+    if (etat_LED == LOW) {  // calculer le nouvel état
+      etat_LED = HIGH;
+    } else {
+      etat_LED = LOW;
+    }
+
+    digitalWrite(13, etat_LED);  // appliquer cet état
+  }
+}
+```
+
 ---
 
 ## Automates finis
@@ -201,7 +249,13 @@ d'après le mode d'emploi
 
 --
 
+La même montre,  
+d'après mes essais.
+
 ![](img/montre-2.png)
+
+Note: Les ingénieurs qui l'ont conçue on probablement dessiné un schéma
+semblable à celui-ci.
 
 ---
 
@@ -209,13 +263,21 @@ d'après le mode d'emploi
 
 ![](img/feu_tricolore.png)
 
+Note: Comment ajouter un bouton d'appel piétons ?
+
 --
 
 ![](img/feu_tricolore-2.png)
 
+Note: Problème : et si un gamin facétieux appuie sur le bouton à chaque
+fois que le feu passe au vert ?
+
 --
 
 ![](img/feu_tricolore-3.png)
+
+Note: Problème : si un piéton appelle dans l'état VERT, l'appel n'est
+pas pris en compte.
 
 --
 
