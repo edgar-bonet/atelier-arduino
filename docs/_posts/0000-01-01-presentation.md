@@ -177,7 +177,14 @@ Ctrl-T pour indenter.
 
 ## Bases d'électronique
 
-analogie hydraulique
+![](img/resistance.png)
+
+U = R i  
+i = U / R
+
+Note: Analogie hydraulique :
+* source, résistance
+* i, V, U
 
 entrée = circuit ouvert, sortie connexion à GND ou Vcc
 
