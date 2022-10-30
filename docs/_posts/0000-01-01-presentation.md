@@ -211,11 +211,18 @@ digitalWrite(numero_de_broche, HIGH);  // LOW = 1
 analogWrite(numero_de_broche, valeur);  // valeur = 0 à 255
 ```
 
----
+--
 
-## Pont diviseur de tension
+### Pont diviseur de tension
 
-cas dégénérés (R = 0 ou ∞, court-circuit, entrée flottante)
+![](img/pont.png)
+
+Uₛ = R₁/(R₁+R₂) × Uₑ
+
+Note: voir cas dégénérés
+* R₂ = 0 ou ∞
+* R₁ = 0 ou ∞
+* (R₁ et R₂) = 0 ou ∞
 
 ---
 
