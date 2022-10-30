@@ -186,7 +186,30 @@ Note: Analogie hydraulique :
 * source, résistance
 * i, V, U
 
-entrée = circuit ouvert, sortie connexion à GND ou Vcc
+--
+
+### Entrées de l'Arduino
+
+![](img/entrees.png)
+
+```arduino
+int valeur_analogique = analogRead(numero_de_broche);
+
+int valeur_logique = digitalRead(numero_de_broche);
+```
+
+--
+
+### Sorties de l'Arduino
+
+![](img/sorties.png)
+
+```arduino
+digitalWrite(numero_de_broche, LOW);   // LOW = 0
+digitalWrite(numero_de_broche, HIGH);  // LOW = 1
+
+analogWrite(numero_de_broche, valeur);  // valeur = 0 à 255
+```
 
 ---
 
