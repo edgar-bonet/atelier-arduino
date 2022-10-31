@@ -206,6 +206,9 @@ Note: voir cas dégénérés
 ![](img/entrees.png)
 
 ```arduino
+// Dans setup() :
+pinMode(numero_de_broche, INPUT);
+
 int valeur_analogique = analogRead(numero_de_broche);
 float U = valeur_analogique / 1024.0 * 5.0;  // en volts
 
@@ -219,6 +222,9 @@ int valeur_logique = digitalRead(numero_de_broche);
 ![](img/sorties.png)
 
 ```arduino
+// Dans setup() :
+pinMode(numero_de_broche, OUTPUT);
+
 digitalWrite(numero_de_broche, LOW);   // LOW = 0
 digitalWrite(numero_de_broche, HIGH);  // LOW = 1
 
