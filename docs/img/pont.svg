@@ -100,9 +100,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.5414063"
-     inkscape:cx="640"
-     inkscape:cy="360"
+     inkscape:zoom="2.3111475"
+     inkscape:cx="734.06996"
+     inkscape:cy="463.21337"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -258,23 +258,23 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
        x="165.55702"
-       y="195.81195"
+       y="155.33667"
        id="text3166"><tspan
          sodipodi:role="line"
          id="tspan3164"
          x="165.55702"
-         y="195.81195"
+         y="155.33667"
          style="stroke-width:0.26458335">R₂</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
-       x="165.64285"
-       y="156.24648"
+       x="165.56189"
+       y="195.3456"
        id="text3172"><tspan
          sodipodi:role="line"
          id="tspan3170"
-         x="165.64285"
-         y="156.24648"
+         x="165.56189"
+         y="195.3456"
          style="stroke-width:0.26458335">R₁</tspan></text>
   </g>
 </svg>
