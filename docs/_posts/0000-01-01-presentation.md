@@ -207,6 +207,7 @@ Note: voir cas dégénérés
 
 ```arduino
 int valeur_analogique = analogRead(numero_de_broche);
+float U = valeur_analogique / 1024.0 * 5.0;  // en volts
 
 int valeur_logique = digitalRead(numero_de_broche);
 ```
