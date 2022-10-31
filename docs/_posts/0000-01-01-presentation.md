@@ -310,11 +310,37 @@ Note: Aussi PWM.
 
 --
 
-sortie fort courant (transistor)
+### Moteur, relais...
 
-charge inductive (transistor + diode roue libre)
+![](img/motor.png)
 
-moteur (PWM)
+```arduino
+digitalWrite(numero_de_broche, HIGH);  // moteur allumé
+digitalWrite(numero_de_broche, LOW);   // moteur éteint
+```
+
+Note: et électrovanne, actionneur linéaire...
+
+Aussi PWM, MOSFET, pont en H.
+
+--
+
+### Servo de modélisme
+
+![](img/servo.png)
+
+```arduino
+// Au tout début :
+#include <Servo.h>
+Servo servo;
+
+// Dans setup() :
+servo.attach(numero_de_broche);
+
+servo.write(angle);  // en degrés, entre 0 et 180
+```
+
+Note: Vcc peut être +5V si **petit** servo.
 
 ---
 
