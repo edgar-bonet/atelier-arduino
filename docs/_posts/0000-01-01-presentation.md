@@ -44,6 +44,8 @@ Dire : attentes, expérience en électronique, programmation, C/C++
 * clones et contrefaçons
 * cartes tierces plus ou moins compatibles
 
+Note: Open Source Hardware.
+
 --
 
 ### Utilisations
@@ -73,6 +75,8 @@ Note: Il y a des petites cartes adaptées à l'intégration sur PCB.
 ![](img/arduino-libs.png)
 
 Note: Aussi : Arduino Web Editor
+
+Open Source Software.
 
 ---
 
@@ -136,12 +140,11 @@ void loop() {
 }
 ```
 
-**Exercice** : modifier le rythme :
-deux flashs, courte pause, deux flashs, courte pause...
+Note: Expliquer le code.
 
-Note: Expliquer la syntaxe.
-
-rythme : noire, noire, demi-pause (blanche)
+**Exercices**:
+* changer les commentaires et les durées
+* rythme : noire, noire, demi-pause (blanche)
 
 ---
 
@@ -153,7 +156,9 @@ Voir pense-bête.
 * syntaxe très stricte
 * l'indentation aide à voir la structure du code
 
-Note: Inventer de la syntaxe ne marche pas.
+Note: Sensible à la case.
+
+Inventer de la syntaxe ne marche pas.
 
 Ctrl-T pour indenter.
 
@@ -184,7 +189,9 @@ i = U / R
 
 Note: Analogie hydraulique :
 * source, résistance
-* i, V, U
+* i, V (référence arbitraire), U
+
+Fils équipotentiels (R ≈ 0).
 
 --
 
@@ -214,6 +221,8 @@ float U = valeur_analogique / 1024.0 * 5.0;  // en volts
 
 int valeur_logique = digitalRead(numero_de_broche);
 ```
+
+Note: Importance du « .0 ».
 
 --
 
@@ -246,9 +255,12 @@ int lecture = analogRead(numero_de_broche);
 float R = lecture / (1024.0 - lecture) * R0;
 ```
 
-Note: i = 0  
+Note: i = 0
+
 Si on inverse R et R₀:  
 R = (1024.0 - lecture) / lecture * R0
+
+Choix de R₀.
 
 --
 
@@ -278,7 +290,13 @@ if (digitalRead(numero_de_broche) == LOW) {
 }
 ```
 
-Note: debounce
+Note: Choix de R.
+
+Noms : pull-up, pull-down.
+
+Dans le kit : pull-down.
+
+Debounce.
 
 --
 
@@ -321,6 +339,8 @@ digitalWrite(numero_de_broche, LOW);   // moteur éteint
 
 Note: et électrovanne, actionneur linéaire...
 
+Potentiellement Vcc ≠ +5V, masse commune.
+
 Aussi PWM, MOSFET, pont en H.
 
 --
@@ -341,6 +361,8 @@ servo.write(angle);  // en degrés, entre 0 et 180
 ```
 
 Note: Vcc peut être +5V si **petit** servo.
+
+Voir exemples fournis avec l'IDE Arduino.
 
 ---
 
