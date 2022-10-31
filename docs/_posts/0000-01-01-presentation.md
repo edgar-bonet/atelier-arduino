@@ -297,7 +297,18 @@ if (digitalRead(numero_de_broche) == LOW) {
 
 --
 
-LED (avec ou sans PWM)
+### LED
+
+![](img/led.png)
+
+```arduino
+digitalWrite(numero_de_broche, HIGH);  // allume la LED
+digitalWrite(numero_de_broche, LOW);   // éteint la LED
+```
+
+Note: Aussi PWM.
+
+--
 
 sortie fort courant (transistor)
 
