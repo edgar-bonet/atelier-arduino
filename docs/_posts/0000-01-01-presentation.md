@@ -264,7 +264,38 @@ float x = analogRead(numero_de_broche) / 1024.0;  // entre 0 et 1
 
 --
 
-bouton (avec ou sans debounce)
+### Bouton
+
+![](img/button.png)
+
+```arduino
+if (digitalRead(numero_de_broche) == HIGH) {
+    // Le bouton est pressé
+}
+
+if (digitalRead(numero_de_broche) == LOW) {
+    // Le bouton est pressé
+}
+```
+
+Note: debounce
+
+--
+
+### Bouton avec pull-up interne
+
+![](img/internal-pu.png)
+
+```arduino
+// Dans setup() :
+pinMode(numero_de_broche, INPUT_PULLUP);
+
+if (digitalRead(numero_de_broche) == LOW) {
+    // Le bouton est pressé
+}
+```
+
+--
 
 LED (avec ou sans PWM)
 
