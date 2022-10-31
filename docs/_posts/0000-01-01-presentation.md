@@ -229,7 +229,34 @@ analogWrite(numero_de_broche, valeur);  // valeur = 0 à 255
 
 ## Recettes
 
-potentiomètre, LDR ou thermistance
+### Capteur résistif
+
+![](img/ldr.png)
+
+Tension mesurée : U = R/(R+R₀) × (5 V)
+
+```arduino
+int lecture = analogRead(numero_de_broche);
+float R = lecture / (1024.0 - lecture) * R0;
+```
+
+Note: i = 0  
+Si on inverse R et R₀:  
+R = (1024.0 - lecture) / lecture * R0
+
+--
+
+### Potentiomètre
+
+![](img/potard.png)
+
+Tension mesurée : U = x ⋅ (5 V)
+
+```arduino
+float x = analogRead(numero_de_broche) / 1024.0;  // entre 0 et 1
+```
+
+--
 
 bouton (avec ou sans debounce)
 
