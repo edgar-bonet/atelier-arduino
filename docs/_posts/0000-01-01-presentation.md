@@ -15,7 +15,7 @@ CCSTI Grenoble – 2022-11-03
 * Edgar Bonet
   * physicien, spécialisé dans le magnétisme
   * libriste de longue date
-  * contributeur majeur à [Arduino Stackexchange][ase]
+  * contributeur fréquent à [Arduino Stackexchange][ase]
   * [contributeur occasionnel][pr] à l'écosystème Arduino
 * [Laboratoire Ouvert Grenoblois][log]
   * hackerspace grenoblois
@@ -156,6 +156,9 @@ Voir pense-bête.
 * syntaxe très stricte
 * l'indentation aide à voir la structure du code
 
+Référence du langage et des bibliothèques standard :
+https://www.arduino.cc/reference/en/
+
 Note: Sensible à la case.
 
 Inventer de la syntaxe ne marche pas.
@@ -177,6 +180,13 @@ Ctrl-T pour indenter.
 ![](img/schema-generique-2.png)
 
 * optionnellement, communication avec un ordinateur
+
+```arduino
+// Dans setup() :
+Serial.begin(9600);
+
+Serial.println(message ou variable ou expression);
+```
 
 ---
 
@@ -224,6 +234,8 @@ int valeur_logique = digitalRead(numero_de_broche);
 
 Note: Importance du « .0 ».
 
+Limites en tension.
+
 --
 
 ### Sorties de l'Arduino
@@ -239,6 +251,8 @@ digitalWrite(numero_de_broche, HIGH);  // LOW = 1
 
 analogWrite(numero_de_broche, valeur);  // valeur = 0 à 255
 ```
+
+Note: Limites en courant.
 
 ---
 
