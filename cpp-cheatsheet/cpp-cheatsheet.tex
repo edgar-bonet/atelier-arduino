@@ -82,10 +82,6 @@ if (condition) {
     instructions...  // exécuté si la condition est fausse
 }
 
-while (condition) {
-    instructions...  // code exécuté à répétition
-}
-
 switch (expression) {  // choix d'un cas parmi un ensemble
     case valeur:
         instructions...
@@ -96,9 +92,25 @@ switch (expression) {  // choix d'un cas parmi un ensemble
     ...
 }
 
+while (condition) {
+    instructions...  // code exécuté à répétition
+}
+
+for (variable = valeur1; variable < valeur2; variable++) {
+    instructions...  // code exécuté à répétition
+}
+
 {  // regroupement de plusieurs instructions
     instructions...
 }
 \end{minted}
+
+\section*{Conditions}
+
+\begin{minted}{cpp}
+expression opérateur expression
+\end{minted}
+où \texttt{opérateur} peut être \textbf{<}, \textbf{<=}, \textbf{>},
+\textbf{>=}, \textbf{==}, \textbf{!=}
 
 \end{document}
