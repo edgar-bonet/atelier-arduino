@@ -54,7 +54,7 @@ Une carte Arduino peut être :
 * intégrée définitivement à un projet
 * servir uniquement de plateforme de prototypage ([exemple][])
 
-[exemple]: https://www.phi.kit.edu/jobs_1452.php
+[exemple]: https://neel.cnrs.fr/wp-content/uploads/2020/11/Faits-marquants-2018.pdf#page=21
 
 Note: Il y a des petites cartes adaptées à l'intégration sur PCB.
 
