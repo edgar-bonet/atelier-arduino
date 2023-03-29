@@ -129,14 +129,14 @@ Open Source Software.
 
 ```arduino
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);     // configurer la broche 13 en sortie
+    pinMode(LED_BUILTIN, OUTPUT);     // configurer la broche 13 en sortie
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // allumer
-  delay(1000);                      // attendre
-  digitalWrite(LED_BUILTIN, LOW);   // éteindre
-  delay(1000);                      // attendre
+    digitalWrite(LED_BUILTIN, HIGH);  // allumer
+    delay(1000);                      // attendre
+    digitalWrite(LED_BUILTIN, LOW);   // éteindre
+    delay(1000);                      // attendre
 }
 ```
 
@@ -182,10 +182,15 @@ Ctrl-T pour indenter.
 * optionnellement, communication avec un ordinateur
 
 ```arduino
-// Dans setup() :
-Serial.begin(9600);
+void setup() {
+    Serial.begin(9600);
+}
 
-Serial.println(message ou variable ou expression);
+void loop() {
+    Serial.print("Le résultat est : ");
+    Serial.println(42);
+    delay(1000);
+}
 ```
 
 ---
@@ -223,13 +228,35 @@ Note: voir cas dégénérés
 ![](img/entrees.png)
 
 ```arduino
-// Dans setup() :
-pinMode(numero_de_broche, INPUT);
+const int broche_analogique = A0;
 
-int valeur_analogique = analogRead(numero_de_broche);
-float U = valeur_analogique / 1024.0 * 5.0;  // en volts
+void setup() {
+    Serial.begin(9600);
+}
 
-int valeur_logique = digitalRead(numero_de_broche);
+void loop() {
+    int valeur_analogique = analogRead(broche_analogique);
+    float U = valeur_analogique / 1024.0 * 5.0;  // en volts
+    Serial.print("tension mesurée : ");
+    Serial.println(U);
+    delay(1000);
+}
+
+/**********************************************************************/
+
+const int broche_logique = 6;
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(broche_logique, INPUT);
+}
+
+void loop() {
+    int valeur_logique = digitalRead(broche_logique);
+    Serial.print("entrée logique : ");
+    Serial.println(valeur_logique);
+    delay(1000);
+}
 ```
 
 Note: Importance du « .0 ».
@@ -243,13 +270,20 @@ Limites en tension.
 ![](img/sorties.png)
 
 ```arduino
-// Dans setup() :
-pinMode(numero_de_broche, OUTPUT);
+const int numero_de_broche = 6;
 
-digitalWrite(numero_de_broche, LOW);   // LOW = 0
-digitalWrite(numero_de_broche, HIGH);  // LOW = 1
+void setup() {
+    pinMode(numero_de_broche, OUTPUT);
+}
 
-analogWrite(numero_de_broche, valeur);  // valeur = 0 à 255
+void loop() {
+    digitalWrite(numero_de_broche, LOW);   // LOW = 0
+    delay(1000);
+    digitalWrite(numero_de_broche, HIGH);  // LOW = 1
+    delay(1000);
+    analogWrite(numero_de_broche, 123);  // valeur = 0 à 255
+    delay(1000);
+}
 ```
 
 Note: Limites en courant.
@@ -265,8 +299,19 @@ Note: Limites en courant.
 Tension mesurée : U = R/(R+R₀) × (5 V)
 
 ```arduino
-int lecture = analogRead(numero_de_broche);
-float R = lecture / (1024.0 - lecture) * R0;
+const int numero_de_broche = A0;
+
+void setup() {
+    Serial.begin(9600);
+}
+
+void loop() {
+    int lecture = analogRead(numero_de_broche);
+    float R = lecture / (1024.0 - lecture) * R0;
+    Serial.print("résistance : ");
+    Serial.println(R);
+    delay(1000);
+}
 ```
 
 Note: i = 0
@@ -285,7 +330,18 @@ Choix de R₀.
 Tension mesurée : U = x ⋅ (5 V)
 
 ```arduino
-float x = analogRead(numero_de_broche) / 1024.0;  // entre 0 et 1
+const int numero_de_broche = A0;
+
+void setup() {
+    Serial.begin(9600);
+}
+
+void loop() {
+    float x = analogRead(numero_de_broche) / 1024.0;  // entre 0 et 1
+    Serial.print("position du potentiomètre : ");
+    Serial.println(x);
+    delay(1000);
+}
 ```
 
 --
@@ -295,12 +351,20 @@ float x = analogRead(numero_de_broche) / 1024.0;  // entre 0 et 1
 ![](img/button.png)
 
 ```arduino
-if (digitalRead(numero_de_broche) == HIGH) {
-    // Le bouton est pressé
+const int numero_de_broche = 4;
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(numero_de_broche, INPUT);
 }
 
-if (digitalRead(numero_de_broche) == LOW) {
-    // Le bouton est pressé
+void loop() {
+    if (digitalRead(numero_de_broche) == HIGH) {  // LOW avec un pull-up
+        Serial.println("Le bouton est pressé");
+    } else {
+        Serial.println("Le bouton est relâché");
+    }
+    delay(1000);
 }
 ```
 
@@ -319,11 +383,20 @@ Debounce.
 ![](img/internal-pu.png)
 
 ```arduino
-// Dans setup() :
-pinMode(numero_de_broche, INPUT_PULLUP);
+const int numero_de_broche = 4;
 
-if (digitalRead(numero_de_broche) == LOW) {
-    // Le bouton est pressé
+void setup() {
+    Serial.begin(9600);
+    pinMode(numero_de_broche, INPUT_PULLUP);
+}
+
+void loop() {
+    if (digitalRead(numero_de_broche) == LOW) {
+        Serial.println("Le bouton est pressé");
+    } else {
+        Serial.println("Le bouton est relâché");
+    }
+    delay(1000);
 }
 ```
 
@@ -334,8 +407,18 @@ if (digitalRead(numero_de_broche) == LOW) {
 ![](img/led.png)
 
 ```arduino
-digitalWrite(numero_de_broche, HIGH);  // allume la LED
-digitalWrite(numero_de_broche, LOW);   // éteint la LED
+const int numero_de_broche = 8;  // LED externe
+
+void setup() {
+    pinMode(numero_de_broche, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(numero_de_broche, HIGH);   // allume la LED
+    delay(1000);
+    digitalWrite(numero_de_broche, LOW);    // éteint la LED
+    delay(1000);
+}
 ```
 
 Note: Aussi PWM.
@@ -347,8 +430,18 @@ Note: Aussi PWM.
 ![](img/motor.png)
 
 ```arduino
-digitalWrite(numero_de_broche, HIGH);  // moteur allumé
-digitalWrite(numero_de_broche, LOW);   // moteur éteint
+const int numero_de_broche = 8;  // commande du moteur
+
+void setup() {
+    pinMode(numero_de_broche, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(numero_de_broche, HIGH);   // moteur allumé
+    delay(1000);
+    digitalWrite(numero_de_broche, LOW);    // moteur éteint
+    delay(1000);
+}
 ```
 
 Note: et électrovanne, actionneur linéaire...
@@ -364,14 +457,21 @@ Aussi PWM, MOSFET, pont en H.
 ![](img/servo.png)
 
 ```arduino
-// Au tout début :
 #include <Servo.h>
+
+const int numero_de_broche = 12;
 Servo servo;
 
-// Dans setup() :
-servo.attach(numero_de_broche);
+void setup() {
+    servo.attach(numero_de_broche);
+}
 
-servo.write(angle);  // en degrés, entre 0 et 180
+void loop() {
+    servo.write(0);    // positions extrêmes : 0°...
+    delay(1000);
+    servo.write(180);  // ...et 180°
+    delay(1000);
+}
 ```
 
 Note: Vcc peut être +5V si **petit** servo.
