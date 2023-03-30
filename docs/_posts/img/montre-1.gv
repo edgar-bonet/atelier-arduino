@@ -1,0 +1,9 @@
+# Version du manual d'utilisation.
+
+digraph "Montre Casio Edifice" {
+    HEURE  -> MARCHE [label=" A  "];
+    MARCHE -> ARRET  [label=" A  "];
+    ARRET  -> MARCHE [label=" A  "];
+    ARRET  -> ZERO   [label=" B  "];
+    ZERO   -> HEURE  [label=" B  "];
+}
