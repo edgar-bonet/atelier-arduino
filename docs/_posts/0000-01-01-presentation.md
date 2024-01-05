@@ -1,11 +1,11 @@
-## Atelier Arduino
+## Atelier Arduino – Programmation efficace
 
 ![](img/Arduino_uno_r3.jpg)  
 <small>Arduino Uno R3 – © Maker Media GmbH – CC BY-SA 4.0</small>
 
 Edgar Bonet
 
-CCSTI Grenoble – 2023-03-30
+CCSTI Grenoble – 2024-01-06
 
 ---
 
