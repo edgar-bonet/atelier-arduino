@@ -304,3 +304,43 @@ pas pris en compte.
 
 Note: La transition VERT\_APPEL → ORANGE peut être instantanée  
 Le diagramme d'état sert à affiner le cahier des charges.
+
+---
+
+## Servo qui scanne
+
+
+```arduino
+#include <Servo.h>
+
+Servo myservo; 
+
+void setup() {
+    myservo.attach(4);
+}
+
+void loop() {
+    for (int i = 2; i <= 180; i += 2) {
+        myservo.write(i);
+        delay(20);
+    }
+    for (int i = 178; i >= 0; i -= 2) {
+        myservo.write(i);
+        delay(20);
+    }
+}
+```
+
+Note: Il y a 180 états.
+
+---
+
+## Moteur de portail
+
+<div style="float: right">
+![](img/portail.png)
+</div>
+
+Programmer cet automate.
+
+Note: Et si on appuie sur le bouton quand le portail est en mouvement ?
