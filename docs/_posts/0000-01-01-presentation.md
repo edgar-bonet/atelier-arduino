@@ -29,12 +29,41 @@ CCSTI Grenoble – 2024-01-06
 [log]: https://www.logre.eu/
 [ccsti]: https://lacasemate.fr/
 
-Note: Faire tour de table pour se présenter.
-Dire : attentes, expérience en électronique, programmation, C/C++
+Note: Faire tour de table pour se présenter.  
+Dire : attentes, expérience en programmation Arduino, évènementielle,
+machines à états.
 
 ---
 
-## Programmation non bloquante
+## Programmation non bloquante – Motivation
+
+But : gérer plusieurs tâches en parallèle, sans qu'elles se bloquent
+mutuellement.
+
+![Arduino Stack Exchange](img/arduino-se.png) Recherche « blocking
+is:answer » → 1 217 résultats
+
+> Many of the programming questions on the Arduino forum can be answered
+> with one simple response: Implement a "Finite State Machine."
+> — Majenko
+
+Note: Les questions ne sont pas posées en termes de parallélisme.
+
+--
+
+### Stratégies pour gérer des tâches parallèles
+
+1. Un processus/thread par tâche
+  * optimal pour tâches lourdes sur un processeur multi-cœur
+  * nécessite un OS (ordonnanceur)
+  * coût en mémoire (une pile par thread)
+2. Gérer des évènements successif dans un thread unique
+  * optimal quand la gestion d'un évènement est légère
+  * faible coût en mémoire et CPU
+  * approche populaire pour le Web (Nginx, Node.js...)
+
+Note: On demande à un Arduino des tâches simples (< 1 ms).  
+Il passe le plus clair de son temps à attendre.
 
 ---
 
