@@ -204,6 +204,9 @@ Ma montre
 
 d'après le mode d'emploi
 
+Note: Un état peut attendre plusieurs évènements : le premier arrivé
+déclenche la transition.
+
 --
 
 La même montre,  
@@ -220,9 +223,64 @@ semblable à celui-ci.
 
 ![](img/feu_tricolore.png)
 
-Note: Comment ajouter un bouton d'appel piétons ?
+```arduino
+void loop() {
+    digitalWrite(green_pin, LOW);
+    digitalWrite(orange_pin, HIGH);
+    delay(1000);
+
+    digitalWrite(orange_pin, LOW);
+    digitalWrite(red_pin, HIGH);
+    delay(5000);
+
+    digitalWrite(red_pin, LOW);
+    digitalWrite(green_pin, HIGH);
+    delay(4000);
+}
+```
 
 --
+
+### Solution non-bloquante
+
+```arduino
+void loop() {
+    static enum { GREEN, ORANGE, RED } state = GREEN;  // préparé dans setup()
+    static uint32_t last_change = 0;
+    uint32_t now = millis();
+
+    switch (state) {
+        case GREEN:
+            if (now - last_change >= 4000) {
+                digitalWrite(green_pin, LOW);
+                digitalWrite(orange_pin, HIGH);
+                state = ORANGE;
+                last_change = now;
+            }
+        case ORANGE:
+            if (now - last_change >= 1000) {
+                digitalWrite(orange_pin, LOW);
+                digitalWrite(red_pin, HIGH);
+                state = RED;
+                last_change = now;
+            }
+        case RED:
+            if (now - last_change >= 5000) {
+                digitalWrite(red_pin, LOW);
+                digitalWrite(green_pin, HIGH);
+                state = GREEN;
+                last_change = now;
+            }
+    }
+}
+```
+
+Note: Structure switch/case utilisable pour toute automate fini.  
+Comment ajouter un bouton d'appel piétons ?
+
+--
+
+### Avec bouton d'appel piétons
 
 ![](img/feu_tricolore-2.png)
 
@@ -231,6 +289,8 @@ fois que le feu passe au vert ?
 
 --
 
+### Avec temps minimum au vert
+
 ![](img/feu_tricolore-3.png)
 
 Note: Problème : si un piéton appelle dans l'état VERT, l'appel n'est
@@ -238,4 +298,9 @@ pas pris en compte.
 
 --
 
+### Avec bouton d'appel toujours sensible
+
 ![](img/feu_tricolore-4.png)
+
+Note: La transition VERT\_APPEL → ORANGE peut être instantanée  
+Le diagramme d'état sert à affiner le cahier des charges.
