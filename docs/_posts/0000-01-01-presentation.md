@@ -112,13 +112,11 @@ void loop() {
 
   if (now - last_change >= 400) {  // il est temps de changer d'état
     last_change += 400;
-
     if (led_state == LOW) {  // calculer le nouvel état
       led_state = HIGH;
     } else {
       led_state = LOW;
     }
-
     digitalWrite(led_pin, led_state);  // appliquer cet état
   }
 }
@@ -174,6 +172,28 @@ LED.
 
 Note: La LED « heartbeat » témoigne que le programme ne s'est pas
 bloqué.
+
+--
+
+### Solution non-bloquante
+
+```arduino
+void loop() {
+    static bool motor_is_running = false;
+    if (!motor_is_running && digitalRead(button_pin == HIGH)) {
+        digitalWrite(motor_pin, HIGH);
+        motor_is_running = true;
+        time_turned_on = millis();
+    }
+    if (motor_is_running && millis() - time_turned_on >= 3000) {
+        digitalWrite(motor_pin, LOW);
+        motor_is_running = false;
+    }
+}
+```
+
+Note: L'évènement qu'on attend, et la réponse, dépendent de l'état du
+système.
 
 --
 
@@ -274,6 +294,11 @@ void loop() {
     }
 }
 ```
+
+Recette pour convertir un code bloquant en automate fini :
+
+* repérer les endroits où le code est en attente d'un évènement
+* faire de chaque attente un état
 
 Note: Structure switch/case utilisable pour toute automate fini.  
 Comment ajouter un bouton d'appel piétons ?
