@@ -67,35 +67,88 @@ Il passe le plus clair de son temps à attendre.
 
 ---
 
-## Blink without Delay
+## Faire clignoter des LED
+
+Une seule LED (File/Examples/01.Basics/Blink) :
+
+```arduino
+const int led_pin = 8;
+
+void setup() {
+    pinMode(led_pin, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(led_pin, HIGH);
+    delay(400);
+    digitalWrite(led_pin, LOW);
+    delay(400);
+}
+```
+
+Exercices :
+* Charger et exécuter ce programme
+* Faire clignoter deux LED : une en triolets et une en temps binaire.
+
+Note: demander solution bloquante (algo seul)
+
+--
+
+### Clignotement non bloquant
 
 Fichier → Exemples → 02.Digital → BlinkWithoutDelay
 
 ```arduino
-int etat_LED = LOW;
-
-unsigned long temps_dernier_changement = 0;  // quand a-t-on changé d'état pour la dernière fois ?
+const int led_pin = 8;
+int led_state = LOW;
+unsigned long last_change = 0;  // quand a-t-on changé d'état pour la dernière fois ?
 
 void setup() {
-  pinMode(13, OUTPUT);
+  pinMode(led_pin, OUTPUT);
 }
 
 void loop() {
-  unsigned long maintenant = millis();  // l'heure actuelle
+  unsigned long now = millis();  // l'heure actuelle
 
-  if (maintenant - temps_dernier_changement >= 400) {  // il est temps de changer d'état
-    temps_dernier_changement = maintenant;
+  if (now - last_change >= 400) {  // il est temps de changer d'état
+    last_change += 400;
 
-    if (etat_LED == LOW) {  // calculer le nouvel état
-      etat_LED = HIGH;
+    if (led_state == LOW) {  // calculer le nouvel état
+      led_state = HIGH;
     } else {
-      etat_LED = LOW;
+      led_state = LOW;
     }
 
-    digitalWrite(13, etat_LED);  // appliquer cet état
+    digitalWrite(led_pin, led_state);  // appliquer cet état
   }
 }
 ```
+
+Note: pour deux LED, dupliquer les variables globales.
+
+--
+
+### Principe général d'un programme non-bloquant
+
+```arduino
+void loop() {
+    if (évènement_machin_est_arrivé) {
+        gérer_évènement_machin();
+    }
+
+    if (évènement_bidule_est_arrivé) {
+        gérer_évènement_bidule();
+    }
+
+    if (évènement_truc_est_arrivé) {
+        gérer_évènement_truc();
+    }
+
+    // etc.
+}
+```
+
+Note: Ne **jamais** s'arrêter à attendre
 
 ---
 
