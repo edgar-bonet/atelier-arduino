@@ -369,3 +369,60 @@ Note: Il y a 180 états.
 Programmer cet automate.
 
 Note: Et si on appuie sur le bouton quand le portail est en mouvement ?
+
+---
+
+## Debounce
+
+Commuter une LED par appui sur un bouton.
+
+Exemple de code problématique :
+
+```arduino
+void loop() {
+    static int led_state = LOW;
+    static int old_button_state = LOW;
+    int button_state = digitalRead(button_pin);
+
+    // Détection de l'appui sur le bouton.
+    if (old_button_state == LOW && button_state == HIGH) {
+        led_state = led_state==HIGH ? LOW : HIGH;
+        digitamWrite(led_pin, led_state);
+    }
+    old_button_state = button_state;
+}
+```
+
+--
+
+## Solution par machine à états
+
+![](img/debounce.png)
+
+--
+
+## Solution avec une bibliothèque
+
+```arduino
+#include <Bounce2.h>
+
+const int button_pin = 2;
+const int led_pin = 8;
+
+Bounce button;
+
+void setup() {
+    button.attach(button_pin, INPUT);
+    pinMode(led_pin, OUTPUT);
+}
+
+void loop() {
+    static int led_state = LOW;
+
+    button.update();
+    if (button.rose()) {
+        led_state = led_state==HIGH ? LOW : HIGH;
+        digitamWrite(led_pin, led_state);
+    }
+}
+```
