@@ -277,6 +277,7 @@ void loop() {
                 state = ORANGE;
                 last_change = now;
             }
+            break;
         case ORANGE:
             if (now - last_change >= 1000) {
                 digitalWrite(orange_pin, LOW);
@@ -284,6 +285,7 @@ void loop() {
                 state = RED;
                 last_change = now;
             }
+            break;
         case RED:
             if (now - last_change >= 5000) {
                 digitalWrite(red_pin, LOW);
@@ -291,6 +293,7 @@ void loop() {
                 state = GREEN;
                 last_change = now;
             }
+            break;
     }
 }
 ```
