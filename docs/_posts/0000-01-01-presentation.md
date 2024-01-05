@@ -152,6 +152,48 @@ Note: Ne **jamais** s'arrêter à attendre
 
 ---
 
+## Lire un bouton poussoir
+
+But : quand on appuie sur un bouton, le moteur tourne trois secondes.
+
+```arduino
+void loop() {
+    // Attendre la pression sur le bouton.
+    while (digitalRead(button_pin) == LOW)
+        ;
+
+    // Allumer le moteur pendant trois secondes.
+    digitalWrite(motor_pin, HIGH);
+    delay(3000);
+    digitalWrite(motor_pin, LOW);
+}
+```
+
+Exercice : Implémenter cette fonctionnalité tout en faisant clignoter la
+LED.
+
+Note: La LED « heartbeat » témoigne que le programme ne s'est pas
+bloqué.
+
+--
+
+### Notion d'automate fini
+
+<div style="float: right">
+![](img/bouton-moteur.png)
+</div>
+
+Le programme précédent peut s'interpréter comme un « automate fini » à
+deux états :
+
+* dans chaque état on attend un évènement
+* les évènements déclenchent des transitions
+* les actions de l'automate sont associées aux transitions
+
+Note: Différence avec organigramme (flowchart).
+
+---
+
 ## Automates finis
 
 <div style="float: right">
