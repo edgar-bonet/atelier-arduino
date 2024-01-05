@@ -426,3 +426,54 @@ void loop() {
     }
 }
 ```
+
+---
+
+## Lire un port série
+
+Lecture bloquante :
+
+```arduino
+void loop() {
+    // Attendre des données sur le port série.
+    while (Serial.available() == 0)
+        ;
+
+    // Lire une commande et l'exécuter.
+    String command = Serial.readString();
+    interpret(command);
+}
+```
+
+Note: readString() est aussi bloquant → timeout.
+
+--
+
+### Solution non-bloquante
+
+```arduino
+void loop() {
+    static char buffer[80];
+    static size_t buffer_pos = 0;
+
+    if (Serial.available()) {
+        char c = Serial.read();
+        if (c == '\n') {
+            buffer[buffer_pos] = '\n';  // terminer la chaîne
+            interpret(buffer);
+            buffer_pos = 0;  // préparer la prochaine lecture
+        } else if (buffer_pos < sizeof buffer - 1) {
+            buffer[buffer_pos++] = c;
+        }
+    }
+}
+```
+
+Voir aussi:
+* [Reading Serial on the Arduino][majenko], par Majenko
+* [Simple Arduino command line interpreter][gist], par Edgar
+
+[majenko]: https://majenko.co.uk/blog/reading-serial-arduino
+[gist]: https://gist.github.com/edgar-bonet/607b387260388be77e96
+
+Note: On profite pour éviter String.
