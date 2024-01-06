@@ -4,8 +4,7 @@ Ce dépôt contient les sources des documents que j'ai préparés pour des
 ateliers d'initiation Arduino au [CCSTI Grenoble « La
 Casemate »][casemate]. Pour le premier de ces ateliers (niveau
 initiation), deux séances ont eu lieu, les 3 novembre 2022 et
-30 mars 2023. Use session de « niveau 2 » est prévue pour le
-6 janvier 2024.
+30 mars 2023. Use session de « niveau 2 » a eu lieu le 6 janvier 2024.
 
 ## Contenu
 
