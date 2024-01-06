@@ -122,7 +122,8 @@ void loop() {
 }
 ```
 
-Note: `last_change = now` possible aussi.  
+Note: **dans examples/**  
+`last_change = now` possible aussi.  
 Pour deux LED, dupliquer les variables globales.
 
 --
@@ -195,7 +196,8 @@ void loop() {
 }
 ```
 
-Note: L'évènement qu'on attend, et la réponse, dépendent de l'état du
+Note: **dans examples/**  
+L'évènement qu'on attend, et la réponse, dépendent de l'état du
 système.
 
 --
@@ -307,7 +309,8 @@ Recette pour convertir un code bloquant en automate fini :
 * repérer les endroits où le code est en attente d'un évènement
 * faire de chaque attente un état
 
-Note: Structure switch/case utilisable pour toute automate fini.  
+Note: **dans examples/**  
+Structure switch/case utilisable pour toute automate fini.  
 Comment ajouter un bouton d'appel piétons ?
 
 --
@@ -434,6 +437,8 @@ void loop() {
 }
 ```
 
+Note: **dans examples/**  
+
 ---
 
 ## Lire un port série
@@ -483,4 +488,5 @@ Voir aussi:
 [majenko]: https://majenko.co.uk/blog/reading-serial-arduino
 [gist]: https://gist.github.com/edgar-bonet/607b387260388be77e96
 
-Note: On profite pour éviter String.
+Note: **dans examples/**  
+On profite pour éviter String.
