@@ -11,9 +11,7 @@ initiation), deux séances ont eu lieu, les 3 novembre 2022 et
 * [docs](docs) : sources Markdown du [support de présentation][slides]
 * [cpp-cheatsheet](cpp-cheatsheet) : sources LaTeX du pense-bête
   Arduino/C++
-* [examples](examples) : code source de deux programmes d'exemple
-  * blink-without-delay
-  * feu-tricolore
+* [examples](examples) : code source des programmes d'exemple
 
 Le support de présentation est basé sur [jekyll-reveal.js][], lui même
 basé sur [reveal.js][]. Tous les fichiers du répertoire docs
