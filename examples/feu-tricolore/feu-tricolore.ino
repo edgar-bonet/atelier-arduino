@@ -3,17 +3,14 @@
  */
 
 // Brochage.
-const int feu_vert = 2;
-const int feu_orange = 3;
-const int feu_rouge = 4;
+const int feu_vert = 8;
+const int feu_orange = 9;
+const int feu_rouge = 10;
 
 // Durées.
 const unsigned long duree_vert   = 4000;
 const unsigned long duree_orange = 1000;
 const unsigned long duree_rouge  = 5000;
-
-enum { VERT, ORANGE, ROUGE } etat = VERT;
-unsigned long dernier_changement;
 
 void setup() {
     pinMode(feu_vert, OUTPUT);
@@ -22,12 +19,14 @@ void setup() {
     digitalWrite(feu_vert, HIGH);
     digitalWrite(feu_orange, LOW);
     digitalWrite(feu_rouge, LOW);
-    dernier_changement = millis();
 }
 
 void loop() {
-    unsigned long maintenant = millis();
-    unsigned long temps_ecoule = maintenant - dernier_changement;
+    static enum { VERT, ORANGE, ROUGE } etat = VERT;
+    static uint32_t dernier_changement = 0;
+    uint32_t maintenant = millis();
+    uint32_t temps_ecoule = maintenant - dernier_changement;
+
     switch (etat) {
         case VERT:
             if (temps_ecoule >= duree_vert) {

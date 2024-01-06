@@ -122,7 +122,8 @@ void loop() {
 }
 ```
 
-Note: pour deux LED, dupliquer les variables globales.
+Note: `last_change = now` possible aussi.  
+Pour deux LED, dupliquer les variables globales.
 
 --
 
@@ -146,7 +147,8 @@ void loop() {
 }
 ```
 
-Note: Ne **jamais** s'arrêter à attendre
+Note: Ne **jamais** s'arrêter à attendre.  
+`loop()` tourne > 1 kHz.
 
 ---
 
@@ -180,6 +182,7 @@ bloqué.
 ```arduino
 void loop() {
     static bool motor_is_running = false;
+    static uint32_t time_turned_on = 0;
     if (!motor_is_running && digitalRead(button_pin == HIGH)) {
         digitalWrite(motor_pin, HIGH);
         motor_is_running = true;
@@ -265,33 +268,34 @@ void loop() {
 
 ```arduino
 void loop() {
-    static enum { GREEN, ORANGE, RED } state = GREEN;  // préparé dans setup()
-    static uint32_t last_change = 0;
-    uint32_t now = millis();
+    static enum { VERT, ORANGE, ROUGE } etat = VERT;
+    static uint32_t dernier_changement = 0;
+    uint32_t maintenant = millis();
+    uint32_t temps_ecoule = maintenant - dernier_changement;
 
-    switch (state) {
-        case GREEN:
-            if (now - last_change >= 4000) {
-                digitalWrite(green_pin, LOW);
-                digitalWrite(orange_pin, HIGH);
-                state = ORANGE;
-                last_change = now;
+    switch (etat) {
+        case VERT:
+            if (temps_ecoule >= duree_vert) {
+                digitalWrite(feu_vert, LOW);
+                digitalWrite(feu_orange, HIGH);
+                etat = ORANGE;
+                dernier_changement = maintenant;
             }
             break;
         case ORANGE:
-            if (now - last_change >= 1000) {
-                digitalWrite(orange_pin, LOW);
-                digitalWrite(red_pin, HIGH);
-                state = RED;
-                last_change = now;
+            if (temps_ecoule >= duree_orange) {
+                digitalWrite(feu_orange, LOW);
+                digitalWrite(feu_rouge, HIGH);
+                etat = ROUGE;
+                dernier_changement = maintenant;
             }
             break;
-        case RED:
-            if (now - last_change >= 5000) {
-                digitalWrite(red_pin, LOW);
-                digitalWrite(green_pin, HIGH);
-                state = GREEN;
-                last_change = now;
+        case ROUGE:
+            if (temps_ecoule >= duree_rouge) {
+                digitalWrite(feu_rouge, LOW);
+                digitalWrite(feu_vert, HIGH);
+                etat = VERT;
+                dernier_changement = maintenant;
             }
             break;
     }
@@ -390,7 +394,7 @@ void loop() {
     // Détection de l'appui sur le bouton.
     if (old_button_state == LOW && button_state == HIGH) {
         led_state = led_state==HIGH ? LOW : HIGH;
-        digitamWrite(led_pin, led_state);
+        digitalWrite(led_pin, led_state);
     }
     old_button_state = button_state;
 }
@@ -425,7 +429,7 @@ void loop() {
     button.update();
     if (button.rose()) {
         led_state = led_state==HIGH ? LOW : HIGH;
-        digitamWrite(led_pin, led_state);
+        digitalWrite(led_pin, led_state);
     }
 }
 ```
@@ -462,7 +466,7 @@ void loop() {
     if (Serial.available()) {
         char c = Serial.read();
         if (c == '\n') {
-            buffer[buffer_pos] = '\n';  // terminer la chaîne
+            buffer[buffer_pos] = '\0';  // terminer la chaîne
             interpret(buffer);
             buffer_pos = 0;  // préparer la prochaine lecture
         } else if (buffer_pos < sizeof buffer - 1) {
