@@ -14,7 +14,7 @@ void setup() {
 void loop() {
     static bool motor_is_running = false;
     static uint32_t time_turned_on = 0;
-    if (!motor_is_running && digitalRead(button_pin == HIGH)) {
+    if (!motor_is_running && digitalRead(button_pin) == HIGH) {
         digitalWrite(motor_pin, HIGH);
         motor_is_running = true;
         time_turned_on = millis();
