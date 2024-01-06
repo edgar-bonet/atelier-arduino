@@ -1,0 +1,6 @@
+digraph "Portail" {
+    FERMÉ -> OUVRANT [label=" bouton "];
+    OUVRANT -> OUVERT [label=" butée "];
+    OUVERT -> FERMANT [label=" bouton "];
+    FERMANT -> FERMÉ [label=" butée "];
+}
