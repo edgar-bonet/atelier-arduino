@@ -1,9 +1,9 @@
 # Atelier d'initiation à l'Arduino
 
 Ce dépôt contient les sources des documents que j'ai préparés pour un
-atelier d'initiation Arduino. Cet atelier a eu lieu la première fois le
-3 novembre 2022, au [CCSTI Grenoble « La Casemate »][casemate]. Une
-deuxième session est prévue pour le 30 mars 2023.
+atelier d'initiation Arduino. Cet atelier a eu lieu les 3 novembre 2022
+et 30 mars 2023, au [CCSTI Grenoble « La Casemate »][casemate]. Une
+troisième session est prévue pour le 28 septembre 2023.
 
 ## Contenu
 
@@ -24,7 +24,7 @@ sous-répertoires :
 
 ## Licences
 
-* ce dépôt : © 2022–2023 Edgar Bonet, CC-BY-SA-4.0
+* ce dépôt : © 2022–2024 Edgar Bonet, CC-BY-SA-4.0
 * jekyll-reveal.js : © 2013 Dennis Ploeger, BSD-2-Clause
 * reveal.js : © 2011–2022 Hakim El Hattab, MIT
 
