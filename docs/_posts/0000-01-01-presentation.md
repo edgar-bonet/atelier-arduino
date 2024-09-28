@@ -300,6 +300,7 @@ Tension mesurée : U = R/(R+R₀) × (5 V)
 
 ```arduino
 const int numero_de_broche = A0;
+const float R0 = 1000.0;
 
 void setup() {
     Serial.begin(9600);
