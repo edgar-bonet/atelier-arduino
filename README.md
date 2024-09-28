@@ -1,9 +1,9 @@
 # Atelier d'initiation à l'Arduino
 
 Ce dépôt contient les sources des documents que j'ai préparés pour un
-atelier d'initiation Arduino. Cet atelier a eu lieu les 3 novembre 2022
-et 30 mars 2023, au [CCSTI Grenoble « La Casemate »][casemate]. Une
-troisième session est prévue pour le 28 septembre 2023.
+atelier d'initiation Arduino. Cet atelier a eu lieu les 3 novembre 2022,
+30 mars 2023, et 28 septembre 2024 au [CCSTI Grenoble « La
+Casemate »][casemate].
 
 ## Contenu
 
