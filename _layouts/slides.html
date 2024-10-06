@@ -8,7 +8,7 @@ permalink: /
 	<div class="list-group-item">
 	
 		<!-- title -->
-		<a href="{{ slide.url }}">
+		<a href=".{{ slide.url }}">
 			<h4 class="list-group-item-heading">{{ slide.title }}</h4>
 		</a>
 		
@@ -26,13 +26,13 @@ permalink: /
 		<div class="tags"><div class="spacing-2x"><p>
 			Keywords:
 			{% for tag in slide.tags %}
-				<a class="tag" href="/tags/#{{ tag }}" title="{{tag}}">{{tag}}</a>
+				<a class="tag" href="tags/#{{ tag }}" title="{{tag}}">{{tag}}</a>
 				{% if tag != slide.tags.last %},{% endif %}	<!-- split with ',' -->
 			{% endfor %}
 		</p></div></div>
 		
 		<!-- excerpt -->
-		<p>{{ slide.excerpt | strip_html}} <a href="{{ slide.url }}"> ▶️ Show now</a></p>
+		<p>{{ slide.excerpt | strip_html}} <a href=".{{ slide.url }}"> ▶️ Show now</a></p>
 	</div>
 	{% endfor %}
 </div>
