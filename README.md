@@ -1,18 +1,17 @@
 # Atelier d'initiation à l'Arduino
 
-Ce dépôt contient les sources des documents que j'ai préparés pour un
-atelier d'initiation Arduino. Cet atelier a eu lieu les 3 novembre 2022,
-30 mars 2023, et 28 septembre 2024 au [CCSTI Grenoble « La
-Casemate »][casemate].
+Ce dépôt contient les sources des documents que j'ai préparés pour des
+ateliers d'initiation Arduino au [CCSTI Grenoble « La
+Casemate »][casemate]. Pour le premier de ces ateliers (niveau
+initiation), deux séances ont eu lieu, les 3 novembre 2022 et
+30 mars 2023. Use session de « niveau 2 » a eu lieu le 6 janvier 2024.
 
 ## Contenu
 
 * [docs](docs) : sources Markdown du [support de présentation][slides]
 * [cpp-cheatsheet](cpp-cheatsheet) : sources LaTeX du pense-bête
   Arduino/C++
-* [examples](examples) : code source de deux programmes d'exemple
-  * blink-without-delay
-  * feu-tricolore
+* [examples](examples) : code source des programmes d'exemple
 
 Le support de présentation est basé sur [jekyll-reveal.js][], lui même
 basé sur [reveal.js][]. Tous les fichiers du répertoire docs
