@@ -1,3 +1,8 @@
+---
+layout: reveal
+title: Atelier Arduino – Programmation efficace
+author: Edgar Bonet
+---
 ## Atelier Arduino – Programmation efficace
 
 ![](img/Arduino_uno_r3.jpg)  
@@ -7,7 +12,7 @@ Edgar Bonet
 
 CCSTI Grenoble – 2024-01-06
 
----
+<!--horizontal-->
 
 ## Présentation
 
@@ -33,7 +38,7 @@ Note: Faire tour de table pour se présenter.
 Dire : attentes, expérience en programmation Arduino, évènementielle,
 machines à états.
 
----
+<!--horizontal-->
 
 ## Programmation non bloquante – Motivation
 
@@ -49,7 +54,7 @@ is:answer » → 1 217 résultats
 
 Note: Les questions ne sont pas posées en termes de parallélisme.
 
---
+<!--vertical-->
 
 ### Stratégies pour gérer des tâches parallèles
 
@@ -65,7 +70,7 @@ Note: Les questions ne sont pas posées en termes de parallélisme.
 Note: On demande à un Arduino des tâches simples (< 1 ms).  
 Il passe le plus clair de son temps à attendre.
 
----
+<!--horizontal-->
 
 ## Faire clignoter des LED
 
@@ -92,7 +97,7 @@ Exercices :
 
 Note: demander solution bloquante (algo seul)
 
---
+<!--vertical-->
 
 ### Clignotement non bloquant
 
@@ -126,7 +131,7 @@ Note: **dans examples/**
 `last_change = now` possible aussi.  
 Pour deux LED, dupliquer les variables globales.
 
---
+<!--vertical-->
 
 ### Principe général d'un programme non-bloquant
 
@@ -151,7 +156,7 @@ void loop() {
 Note: Ne **jamais** s'arrêter à attendre.  
 `loop()` tourne > 1 kHz.
 
----
+<!--horizontal-->
 
 ## Lire un bouton poussoir
 
@@ -176,7 +181,7 @@ LED.
 Note: La LED « heartbeat » témoigne que le programme ne s'est pas
 bloqué.
 
---
+<!--vertical-->
 
 ### Solution non-bloquante
 
@@ -200,7 +205,7 @@ Note: **dans examples/**
 L'évènement qu'on attend, et la réponse, dépendent de l'état du
 système.
 
---
+<!--vertical-->
 
 ### Notion d'automate fini
 
@@ -217,7 +222,7 @@ deux états :
 
 Note: Différence avec organigramme (flowchart).
 
----
+<!--horizontal-->
 
 ## Automates finis
 
@@ -232,7 +237,7 @@ d'après le mode d'emploi
 Note: Un état peut attendre plusieurs évènements : le premier arrivé
 déclenche la transition.
 
---
+<!--vertical-->
 
 La même montre,  
 d'après mes essais.
@@ -242,7 +247,7 @@ d'après mes essais.
 Note: Les ingénieurs qui l'ont conçue on probablement dessiné un schéma
 semblable à celui-ci.
 
----
+<!--horizontal-->
 
 ## Exercice : feu tricolore
 
@@ -264,7 +269,7 @@ void loop() {
 }
 ```
 
---
+<!--vertical-->
 
 ### Solution non-bloquante
 
@@ -313,7 +318,7 @@ Note: **dans examples/**
 Structure switch/case utilisable pour toute automate fini.  
 Comment ajouter un bouton d'appel piétons ?
 
---
+<!--vertical-->
 
 ### Avec bouton d'appel piétons
 
@@ -322,7 +327,7 @@ Comment ajouter un bouton d'appel piétons ?
 Note: Problème : et si un gamin facétieux appuie sur le bouton à chaque
 fois que le feu passe au vert ?
 
---
+<!--vertical-->
 
 ### Avec temps minimum au vert
 
@@ -331,7 +336,7 @@ fois que le feu passe au vert ?
 Note: Problème : si un piéton appelle dans l'état VERT, l'appel n'est
 pas pris en compte.
 
---
+<!--vertical-->
 
 ### Avec bouton d'appel toujours sensible
 
@@ -340,7 +345,7 @@ pas pris en compte.
 Note: La transition VERT\_APPEL → ORANGE peut être instantanée  
 Le diagramme d'état sert à affiner le cahier des charges.
 
----
+<!--horizontal-->
 
 ## Servo qui scanne
 
@@ -368,7 +373,7 @@ void loop() {
 
 Note: Il y a 180 états.
 
----
+<!--horizontal-->
 
 ## Moteur de portail
 
@@ -380,7 +385,7 @@ Programmer cet automate.
 
 Note: Et si on appuie sur le bouton quand le portail est en mouvement ?
 
----
+<!--horizontal-->
 
 ## Debounce
 
@@ -403,13 +408,13 @@ void loop() {
 }
 ```
 
---
+<!--vertical-->
 
 ## Solution par machine à états
 
 ![](img/debounce.png)
 
---
+<!--vertical-->
 
 ## Solution avec une bibliothèque
 
@@ -439,7 +444,7 @@ void loop() {
 
 Note: **dans examples/**  
 
----
+<!--horizontal-->
 
 ## Lire un port série
 
@@ -459,7 +464,7 @@ void loop() {
 
 Note: readString() est aussi bloquant → timeout.
 
---
+<!--vertical-->
 
 ### Solution non-bloquante
 
