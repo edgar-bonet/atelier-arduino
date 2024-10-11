@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{minted}
+\usemintedstyle{algol}
+\addtolength{\oddsidemargin}{-10mm}
+\addtolength{\textwidth}{20mm}
+\addtolength{\topmargin}{-10mm}
+\addtolength{\textheight}{20mm}
+
+\begin{document}
+
+\centerline{\LARGE Pense-bête Arduino/C++}
+\vspace{10mm}
+
+\section*{Programme (« sketch »)}
+
+\begin{minted}{cpp}
+#include <bibliothèque>
+...
+
+déclarations de variables et fonctions
+
+// Code exécuté au démarrage du programme.
+void setup() {
+    instructions...
+}
+
+// Code exécuté à répétition, sans relâche.
+void loop() {
+    instructions...
+}
+\end{minted}
+
+\section*{Déclaration de variable}
+
+\begin{minted}{cpp}
+type nom = valeur_initiale;
+
+const type nom = valeur;
+
+enum { nom_valeur, nom_valeur, ... } nom_variable = valeur_initiale;
+\end{minted}
+où
+\texttt{type} = \textbf{int}, \textbf{unsigned int}, \textbf{long},
+\textbf{unsigned long}, \textbf{float}, ...
+
+\section*{Déclaration de fonction}
+
+\begin{minted}{cpp}
+
+// Fonction qui ne renvoie pas de valeur.
+void nom_de_fonction(paramètre, ...)
+{
+    déclarations de variables locales...
+    instructions...
+}
+
+// Fonction qui renvoie une valeur.
+type_de_retour nom_de_fonction(paramètre, ...)
+{
+    déclarations de variables locales...
+    instructions...
+    return expression;
+}
+\end{minted}
+
+\section*{Instructions}
+
+\begin{minted}{cpp}
+variable = expression;  // affectation
+
+fonction(argument, ...);  // appel de fonction
+
+if (condition) {
+    instructions...  // code exécuté de façon conditionnelle
+}
+
+if (condition) {
+    instructions...  // exécuté si la condition est vraie
+} else {
+    instructions...  // exécuté si la condition est fausse
+}
+
+switch (expression) {  // choix d'un cas parmi un ensemble
+    case valeur:
+        instructions...
+        break;
+    case valeur:
+        instructions...
+        break;
+    ...
+}
+
+while (condition) {
+    instructions...  // code exécuté à répétition
+}
+
+for (variable = valeur1; variable < valeur2; variable++) {
+    instructions...  // code exécuté à répétition
+}
+
+{  // regroupement de plusieurs instructions
+    instructions...
+}
+\end{minted}
+
+\section*{Conditions}
+
+\begin{minted}{cpp}
+expression opérateur expression
+\end{minted}
+où \texttt{opérateur} peut être \textbf{<}, \textbf{<=}, \textbf{>},
+\textbf{>=}, \textbf{==}, \textbf{!=}
+
+\end{document}

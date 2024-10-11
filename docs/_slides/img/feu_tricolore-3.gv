@@ -1,0 +1,7 @@
+digraph "Feu tricolore" {
+    VERT          -> VERT_SENSIBLE [label=" 2 s "];
+    VERT_SENSIBLE -> ORANGE        [label=" appel "];
+    VERT_SENSIBLE -> ORANGE        [label=" 2 s "];
+    ORANGE        -> ROUGE         [label=" 1 s "];
+    ROUGE         -> VERT          [label=" 5 s "];
+}
