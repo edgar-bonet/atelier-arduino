@@ -1,3 +1,8 @@
+---
+layout: reveal
+title: Atelier Arduino – Initiation
+author: Edgar Bonet
+---
 ## Atelier Arduino
 
 ![](img/Arduino_uno_r3.jpg)  
@@ -7,7 +12,7 @@ Edgar Bonet
 
 CCSTI Grenoble – 2024-09-28
 
----
+<!--horizontal-->
 
 ## Présentation
 
@@ -32,7 +37,7 @@ CCSTI Grenoble – 2024-09-28
 Note: Faire tour de table pour se présenter.
 Dire : attentes, expérience en électronique, programmation, C/C++
 
----
+<!--horizontal-->
 
 ## Arduino : Matériel
 
@@ -46,7 +51,7 @@ Dire : attentes, expérience en électronique, programmation, C/C++
 
 Note: Open Source Hardware.
 
---
+<!--vertical-->
 
 ### Utilisations
 
@@ -58,7 +63,7 @@ Une carte Arduino peut être :
 
 Note: Il y a des petites cartes adaptées à l'intégration sur PCB.
 
----
+<!--horizontal-->
 
 ## Arduino : Logiciel
 
@@ -78,7 +83,7 @@ Note: Aussi : Arduino Web Editor
 
 Open Source Software.
 
----
+<!--horizontal-->
 
 ## Arduino : Communauté
 
@@ -99,13 +104,13 @@ Open Source Software.
   ![](img/casemate.png)
   ...
 
----
+<!--horizontal-->
 
 ## Téléchargement de l'IDE
 
 ![](img/arduino-dl.png)
 
----
+<!--horizontal-->
 
 ## Prise en main de l'IDE
 
@@ -121,7 +126,7 @@ Open Source Software.
   Bouton
   <img src="img/upload-button.png" style="margin: 0 5px; border: 0">
 
----
+<!--horizontal-->
 
 ## Faire clignoter la LED
 
@@ -146,7 +151,7 @@ Note: Expliquer le code.
 * changer les commentaires et les durées
 * rythme : noire, noire, demi-pause (blanche)
 
----
+<!--horizontal-->
 
 ## Bases de C++
 
@@ -165,7 +170,7 @@ Inventer de la syntaxe ne marche pas.
 
 Ctrl-T pour indenter.
 
----
+<!--horizontal-->
 
 ## Schéma générique d'un projet Arduino
 
@@ -175,7 +180,7 @@ Ctrl-T pour indenter.
 * un Arduino pour faire le traitement des données
 * des organes de sortie (actionneurs)
 
---
+<!--vertical-->
 
 ![](img/schema-generique-2.png)
 
@@ -193,7 +198,7 @@ void loop() {
 }
 ```
 
----
+<!--horizontal-->
 
 ## Bases d'électronique
 
@@ -208,7 +213,7 @@ Note: Analogie hydraulique :
 
 Fils équipotentiels (R ≈ 0).
 
---
+<!--vertical-->
 
 ### Pont diviseur de tension
 
@@ -221,7 +226,7 @@ Note: voir cas dégénérés
 * R₁ = 0 ou ∞
 * (R₁ et R₂) = 0 ou ∞
 
---
+<!--vertical-->
 
 ### Entrées de l'Arduino
 
@@ -263,7 +268,7 @@ Note: Importance du « .0 ».
 
 Limites en tension.
 
---
+<!--vertical-->
 
 ### Sorties de l'Arduino
 
@@ -288,7 +293,7 @@ void loop() {
 
 Note: Limites en courant.
 
----
+<!--horizontal-->
 
 ## Recettes
 
@@ -322,7 +327,7 @@ R = (1024.0 - lecture) / lecture * R0
 
 Choix de R₀.
 
---
+<!--vertical-->
 
 ### Potentiomètre
 
@@ -345,7 +350,7 @@ void loop() {
 }
 ```
 
---
+<!--vertical-->
 
 ### Bouton
 
@@ -377,7 +382,7 @@ Dans le kit : pull-down.
 
 Debounce.
 
---
+<!--vertical-->
 
 ### Bouton avec pull-up interne
 
@@ -401,7 +406,7 @@ void loop() {
 }
 ```
 
---
+<!--vertical-->
 
 ### LED
 
@@ -424,7 +429,7 @@ void loop() {
 
 Note: Aussi PWM.
 
---
+<!--vertical-->
 
 ### Moteur, relais...
 
@@ -451,7 +456,7 @@ Potentiellement Vcc ≠ +5V, masse commune.
 
 Aussi PWM, MOSFET, pont en H.
 
---
+<!--vertical-->
 
 ### Servo de modélisme
 
@@ -479,17 +484,17 @@ Note: Vcc peut être +5V si **petit** servo.
 
 Voir exemples fournis avec l'IDE Arduino.
 
----
+<!--horizontal-->
 
 ## Exercices
 
 1 entrée et 1 sortie
 
----
+<!--horizontal-->
 
 ## Programmation non bloquante
 
----
+<!--horizontal-->
 
 ## Blink without Delay
 
@@ -521,7 +526,7 @@ void loop() {
 }
 ```
 
----
+<!--horizontal-->
 
 ## Automates finis
 
@@ -533,7 +538,7 @@ Ma montre
 
 d'après le mode d'emploi
 
---
+<!--vertical-->
 
 La même montre,  
 d'après mes essais.
@@ -543,7 +548,7 @@ d'après mes essais.
 Note: Les ingénieurs qui l'ont conçue on probablement dessiné un schéma
 semblable à celui-ci.
 
----
+<!--horizontal-->
 
 ## Exercice : feu tricolore
 
@@ -551,20 +556,20 @@ semblable à celui-ci.
 
 Note: Comment ajouter un bouton d'appel piétons ?
 
---
+<!--vertical-->
 
 ![](img/feu_tricolore-2.png)
 
 Note: Problème : et si un gamin facétieux appuie sur le bouton à chaque
 fois que le feu passe au vert ?
 
---
+<!--vertical-->
 
 ![](img/feu_tricolore-3.png)
 
 Note: Problème : si un piéton appelle dans l'état VERT, l'appel n'est
 pas pris en compte.
 
---
+<!--vertical-->
 
 ![](img/feu_tricolore-4.png)
