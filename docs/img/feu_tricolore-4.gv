@@ -1,7 +1,0 @@
-digraph "Feu tricolore" {
-    VERT       -> VERT_APPEL [label=" appel "];
-    VERT       -> ORANGE     [label=" 4 s "];
-    VERT_APPEL -> ORANGE     [label="2 s depuis    \nVERT    "];
-    ORANGE     -> ROUGE      [label=" 1 s "];
-    ROUGE      -> VERT       [label=" 5 s "];
-}

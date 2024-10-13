@@ -1,4 +1,0 @@
-digraph "Moteur contrôlé par un bouton" {
-    ARRÊT  -> MARCHE [label=" bouton  \n appuyé  "];
-    MARCHE -> ARRÊT  [label=" 3 s "];
-}

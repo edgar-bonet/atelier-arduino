@@ -1,8 +1,0 @@
-digraph "Debounce" {
-    LOW -> RISING [label=" read HIGH "];
-    RISING -> LOW [label=" read LOW "];
-    RISING -> HIGH [label=" 10 ms / ROSE "];
-    HIGH -> FALLING [label=" read LOW "];
-    FALLING -> HIGH [label=" read HIGH "];
-    FALLING -> LOW [label=" 10 ms / FELL "];
-}
