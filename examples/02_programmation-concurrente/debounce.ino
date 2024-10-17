@@ -4,22 +4,24 @@
 
 #include <Bounce2.h>
 
-const int button_pin = 2;
-const int led_pin = 8;
+const int broche_bouton = 2;
+const int broche_led = 8;
 
-Bounce button;
+Bounce bouton;  // création de l'objet Bounce représentant le bouton
 
 void setup() {
-    button.attach(button_pin, INPUT);
-    pinMode(led_pin, OUTPUT);
+    bouton.attach(broche_bouton, INPUT);
+    pinMode(broche_led, OUTPUT);
 }
 
 void loop() {
     static int led_state = LOW;
 
-    button.update();
-    if (button.rose()) {
+    bouton.update();  // toujours appeler ça régulièrement
+
+    // Quand on appuie sur le bouton, changer l'état de la LED.
+    if (bouton.rose()) {
         led_state = led_state==HIGH ? LOW : HIGH;
-        digitalWrite(led_pin, led_state);
+        digitalWrite(broche_led, led_state);
     }
 }

@@ -2,37 +2,37 @@
  * Exemple de lecture non-bloquante d'un port série.
  */
 
-const int led_pin = 8;
+const int broche_led = 8;
 
 void setup() {
-    pinMode(led_pin, OUTPUT);
+    pinMode(broche_led, OUTPUT);
     Serial.begin(9600);
     Serial.println("Ready.");
 }
 
 /* Contrôler une LED avec les commandes "on" et "off". */
-void interpret(const char *command) {
-    if (strcmp(command, "on") == 0) {
-        digitalWrite(led_pin, HIGH);
-    } else if (strcmp(command, "off") == 0) {
-        digitalWrite(led_pin, LOW);
+void interprete(const char *commande) {
+    if (strcmp(commande, "on") == 0) {          // "on" = allumer
+        digitalWrite(broche_led, HIGH);
+    } else if (strcmp(commande, "off") == 0) {  // "off" = éteindre
+        digitalWrite(broche_led, LOW);
     } else {
-        Serial.println("Bad command.");
+        Serial.println("Commande incorrecte.");
     }
 }
 
 void loop() {
-    static char buffer[80];
-    static size_t buffer_pos = 0;
+    static char tampon[80];        // stockage des caractères reçus
+    static size_t pos_tampon = 0;  // nombre de caractères reçus
 
     if (Serial.available()) {
-        char c = Serial.read();
-        if (c == '\n') {
-            buffer[buffer_pos] = '\0';  // terminer la chaîne
-            interpret(buffer);
-            buffer_pos = 0;  // préparer la prochaine lecture
-        } else if (buffer_pos < sizeof buffer - 1) {
-            buffer[buffer_pos++] = c;
+        char c = Serial.read();         // nouveau caractère reçu
+        if (c == '\n') {                // fin de ligne
+            tampon[pos_tampon] = '\0';  // terminer la chaîne
+            interprete(tampon);
+            pos_tampon = 0;             // préparer la prochaine lecture
+        } else if (pos_tampon < sizeof tampon - 1) {
+            tampon[pos_tampon++] = c;   // ajouter au tampon
         }
     }
 }

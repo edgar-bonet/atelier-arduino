@@ -1,5 +1,5 @@
 /*
- * Exemple : faire clignoter la LED sans bloquer le programme.
+ * Faire clignoter la LED sans bloquer le programme.
  *
  * Adapté de l'exemple Arduino « Blink without delay ».
  */
