@@ -11,7 +11,7 @@ void setup() {
 void loop() {
     digitalWrite(numero_de_broche, LOW);   // LOW = 0
     delay(1000);
-    digitalWrite(numero_de_broche, HIGH);  // LOW = 1
+    digitalWrite(numero_de_broche, HIGH);  // HIGH = 1
     delay(1000);
     analogWrite(numero_de_broche, 123);  // valeur = 0 à 255
     delay(1000);
