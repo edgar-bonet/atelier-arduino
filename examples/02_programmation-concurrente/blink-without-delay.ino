@@ -12,27 +12,27 @@ int etat_LED = LOW;
 unsigned long temps_dernier_changement = 0;
 
 void setup() {
-  // La broche 13, qui est connectée à la LED intégrée, doit être
-  // configurée en sortie.
-  pinMode(13, OUTPUT);
+    // La broche 13, qui est connectée à la LED intégrée, doit être
+    // configurée en sortie.
+    pinMode(13, OUTPUT);
 }
 
 void loop() {
-  // L'heure actuelle, en millisecondes depuis le démarrage.
-  unsigned long maintenant = millis();
+    // L'heure actuelle, en millisecondes depuis le démarrage.
+    unsigned long maintenant = millis();
 
-  // Est-il temps de changer d'état ?
-  if (maintenant - temps_dernier_changement >= 400) {
-    temps_dernier_changement = maintenant;
+    // Est-il temps de changer d'état ?
+    if (maintenant - temps_dernier_changement >= 400) {
+        temps_dernier_changement = maintenant;
 
-    // Calculer le nouvel état.
-    if (etat_LED == LOW) {
-      etat_LED = HIGH;
-    } else {
-      etat_LED = LOW;
+        // Calculer le nouvel état.
+        if (etat_LED == LOW) {
+            etat_LED = HIGH;
+        } else {
+            etat_LED = LOW;
+        }
+
+        // Appliquer cet état.
+        digitalWrite(13, etat_LED);
     }
-
-    // Appliquer cet état.
-    digitalWrite(13, etat_LED);
-  }
 }
