@@ -355,6 +355,7 @@ Le diagramme d'état sert à affiner le cahier des charges.
 
 ## Servo qui scanne
 
+Utilisation de la bibliothèque Servo :
 
 ```arduino
 #include <Servo.h>
@@ -364,7 +365,11 @@ Servo mon_servo;
 void setup() {
     mon_servo.attach(4);
 }
+```
 
+Scan bloquant :
+
+```arduino
 void loop() {
     for (int position = 2; position <= 180; position += 2) {
         mon_servo.write(position);
@@ -378,6 +383,31 @@ void loop() {
 ```
 
 Note: Il y a 360 états.
+
+<!--vertical-->
+
+### Servo qui scanne – non bloquant
+
+```arduino
+void loop() {
+    if (millis() - temps_dernier_pas >= duree_pause) {
+        temps_dernier_pas += duree_pause;
+        switch (direction) {
+            case AVANCE:
+                position += pas_servo;
+                if (position >= 180) direction = RECULE;
+                break;
+            case RECULE:
+                position -= pas_servo;
+                if (position <= 0) direction = AVANCE;
+                break;
+        }
+        mon_servo.write(position);
+    }
+}
+```
+
+Note: **dans examples/**
 
 <!--horizontal-->
 
