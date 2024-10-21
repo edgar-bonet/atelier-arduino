@@ -115,21 +115,21 @@ int led_state = LOW;
 unsigned long last_change = 0;  // quand a-t-on changé d'état pour la dernière fois ?
 
 void setup() {
-  pinMode(led_pin, OUTPUT);
+    pinMode(led_pin, OUTPUT);
 }
 
 void loop() {
-  unsigned long now = millis();  // l'heure actuelle
+    unsigned long now = millis();  // l'heure actuelle
 
-  if (now - last_change >= 400) {  // il est temps de changer d'état
-    last_change += 400;
-    if (led_state == LOW) {  // calculer le nouvel état
-      led_state = HIGH;
-    } else {
-      led_state = LOW;
+    if (now - last_change >= 400) {  // il est temps de changer d'état
+        last_change += 400;
+        if (led_state == LOW) {  // calculer le nouvel état
+            led_state = HIGH;
+        } else {
+            led_state = LOW;
+        }
+        digitalWrite(led_pin, led_state);  // appliquer cet état
     }
-    digitalWrite(led_pin, led_state);  // appliquer cet état
-  }
 }
 ```
 
