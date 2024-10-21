@@ -12,9 +12,9 @@ int etat_LED = LOW;
 unsigned long temps_dernier_changement = 0;
 
 void setup() {
-    // La broche 13, qui est connectée à la LED intégrée, doit être
-    // configurée en sortie.
-    pinMode(13, OUTPUT);
+    // La broche 13 (LED_BUILTIN), qui est connectée à la LED intégrée,
+    // doit être configurée en sortie.
+    pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
@@ -33,6 +33,6 @@ void loop() {
         }
 
         // Appliquer cet état.
-        digitalWrite(13, etat_LED);
+        digitalWrite(LED_BUILTIN, etat_LED);
     }
 }

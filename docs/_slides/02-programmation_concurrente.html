@@ -87,16 +87,14 @@ Il passe le plus clair de son temps à attendre.
 Une seule LED (File/Examples/01.Basics/Blink) :
 
 ```arduino
-const int led_pin = 8;
-
 void setup() {
-    pinMode(led_pin, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-    digitalWrite(led_pin, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
     delay(400);
-    digitalWrite(led_pin, LOW);
+    digitalWrite(LED_BUILTIN, LOW);
     delay(400);
 }
 ```
@@ -115,31 +113,30 @@ Note: demander solution bloquante (algo seul)
 Fichier → Exemples → 02.Digital → BlinkWithoutDelay
 
 ```arduino
-const int led_pin = 8;
-int led_state = LOW;
-unsigned long last_change = 0;  // quand a-t-on changé d'état pour la dernière fois ?
+int etat_LED = LOW;                          // quel est l'état actuel de LED ?
+unsigned long temps_dernier_changement = 0;  // quand a-t-elle changé d'état pour la dernière fois ?
 
 void setup() {
-    pinMode(led_pin, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
-    unsigned long now = millis();  // l'heure actuelle
+    unsigned long maintenant = millis();  // l'heure actuelle
 
-    if (now - last_change >= 400) {  // il est temps de changer d'état
-        last_change += 400;
-        if (led_state == LOW) {  // calculer le nouvel état
-            led_state = HIGH;
+    if (maintenant - temps_dernier_changement  >= 400) {  // est-il temps de changer d'état ?
+        temps_dernier_changement = maintenant;
+        if (etat_LED == LOW) {  // calculer le nouvel état
+            etat_LED = HIGH;
         } else {
-            led_state = LOW;
+            etat_LED = LOW;
         }
-        digitalWrite(led_pin, led_state);  // appliquer cet état
+        digitalWrite(LED_BUILTIN, etat_LED);  // appliquer cet état
     }
 }
 ```
 
 Note: **dans examples/**  
-`last_change = now` possible aussi.  
+`temps_dernier_changement += 400;` possible aussi.  
 Pour deux LED, dupliquer les variables globales.
 
 <!--vertical-->
@@ -148,15 +145,15 @@ Pour deux LED, dupliquer les variables globales.
 
 ```arduino
 void loop() {
-    if (évènement_machin_est_arrivé) {
+    if (évènement_machin_est_arrivé()) {
         gérer_évènement_machin();
     }
 
-    if (évènement_bidule_est_arrivé) {
+    if (évènement_bidule_est_arrivé()) {
         gérer_évènement_bidule();
     }
 
-    if (évènement_truc_est_arrivé) {
+    if (évènement_truc_est_arrivé()) {
         gérer_évènement_truc();
     }
 
@@ -174,15 +171,24 @@ Note: Ne **jamais** s'arrêter à attendre.
 But : quand on appuie sur un bouton, le moteur tourne trois secondes.
 
 ```arduino
+const int broche_bouton = 2;
+const int broche_moteur = 4;
+
+void setup() {
+    pinMode(broche_bouton, INPUT);
+    pinMode(broche_moteur, OUTPUT);
+}
+
 void loop() {
     // Attendre la pression sur le bouton.
-    while (digitalRead(button_pin) == LOW)
-        { /* attendre... */ }
+    while (digitalRead(broche_bouton) == LOW) {
+        /* attendre... */
+    }
 
     // Allumer le moteur pendant trois secondes.
-    digitalWrite(motor_pin, HIGH);
+    digitalWrite(broche_moteur, HIGH);
     delay(3000);
-    digitalWrite(motor_pin, LOW);
+    digitalWrite(broche_moteur, LOW);
 }
 ```
 
@@ -198,17 +204,20 @@ bloqué.
 
 ```arduino
 void loop() {
-    static bool motor_is_running = false;
-    static uint32_t time_turned_on = 0;
+    static bool moteur_tourne = false;   // le moteur tourne-t-il ?
+    static uint32_t temps_allumage = 0;  // quand a-t-il été allumé ?
 
-    if (!motor_is_running && digitalRead(button_pin) == HIGH) {
-        digitalWrite(motor_pin, HIGH);
-        motor_is_running = true;
-        time_turned_on = millis();
+    // Quand on appuie sur le bouton, allumer le moteur.
+    if (!moteur_tourne && digitalRead(broche_bouton) == HIGH) {
+        digitalWrite(broche_moteur, HIGH);
+        moteur_tourne = true;
+        temps_allumage = millis();
     }
-    if (motor_is_running && millis() - time_turned_on >= 3000) {
-        digitalWrite(motor_pin, LOW);
-        motor_is_running = false;
+
+    // Quand il a tourné trois secondes, éteindre le moteur.
+    if (moteur_tourne && millis() - temps_allumage >= 3000) {
+        digitalWrite(broche_moteur, LOW);
+        moteur_tourne = false;
     }
 }
 ```
@@ -269,16 +278,16 @@ semblable à celui-ci.
 
 ```arduino
 void loop() {
-    digitalWrite(green_pin, LOW);
-    digitalWrite(orange_pin, HIGH);
+    digitalWrite(feu_vert, LOW);
+    digitalWrite(feu_orange, HIGH);
     delay(1000);
 
-    digitalWrite(orange_pin, LOW);
-    digitalWrite(red_pin, HIGH);
+    digitalWrite(feu_orange, LOW);
+    digitalWrite(feu_rouge, HIGH);
     delay(5000);
 
-    digitalWrite(red_pin, LOW);
-    digitalWrite(green_pin, HIGH);
+    digitalWrite(feu_rouge, LOW);
+    digitalWrite(feu_vert, HIGH);
     delay(4000);
 }
 ```
@@ -304,21 +313,7 @@ void loop() {
             }
             break;
         case ORANGE:
-            if (temps_ecoule >= duree_orange) {
-                digitalWrite(feu_orange, LOW);
-                digitalWrite(feu_rouge, HIGH);
-                etat = ROUGE;
-                dernier_changement = maintenant;
-            }
-            break;
-        case ROUGE:
-            if (temps_ecoule >= duree_rouge) {
-                digitalWrite(feu_rouge, LOW);
-                digitalWrite(feu_vert, HIGH);
-                etat = VERT;
-                dernier_changement = maintenant;
-            }
-            break;
+            // ...
     }
 }
 ```
@@ -369,24 +364,24 @@ Utilisation de la bibliothèque Servo :
 ```arduino
 #include <Servo.h>
 
+const uint8_t broche_servo = 4;
+const int pas_servo = 2;          // pas de 2 degrés
+const uint32_t duree_pause = 20;  // pause entre deux pas
+
 Servo mon_servo;
 
 void setup() {
-    mon_servo.attach(4);
+    mon_servo.attach(broche_servo);
 }
-```
 
-Scan bloquant :
-
-```arduino
 void loop() {
-    for (int position = 2; position <= 180; position += 2) {
+    for (int position = 2; position <= 180; position += pas_servo) {
         mon_servo.write(position);
-        delay(20);
+        delay(duree_pause);
     }
-    for (int position = 178; position >= 0; position -= 2) {
+    for (int position = 178; position >= 0; position -= pas_servo) {
         mon_servo.write(position);
-        delay(20);
+        delay(duree_pause);
     }
 }
 ```
@@ -401,6 +396,8 @@ Note: Il y a 360 états.
 void loop() {
     if (millis() - temps_dernier_pas >= duree_pause) {
         temps_dernier_pas += duree_pause;
+
+        // Calculer le prochain état.
         switch (direction) {
             case AVANCE:
                 position += pas_servo;
@@ -411,6 +408,8 @@ void loop() {
                 if (position <= 0) direction = AVANCE;
                 break;
         }
+
+        // Appliquer l'état calculé.
         mon_servo.write(position);
     }
 }
@@ -439,16 +438,16 @@ Exemple de code problématique :
 
 ```arduino
 void loop() {
-    static int led_state = LOW;
-    static int old_button_state = LOW;
-    int button_state = digitalRead(button_pin);
+    static int etat_LED = LOW;
+    static int ancien_etat_bouton = LOW;
+    int etat_bouton = digitalRead(broche_bouton);
 
     // Détection de l'appui sur le bouton.
-    if (old_button_state == LOW && button_state == HIGH) {
-        led_state = led_state==HIGH ? LOW : HIGH;
-        digitalWrite(led_pin, led_state);
+    if (ancien_etat_bouton == LOW && etat_bouton == HIGH) {
+        etat_LED = etat_LED==HIGH ? LOW : HIGH;
+        digitalWrite(led_pin, etat_LED);
     }
-    old_button_state = button_state;
+    ancien_etat_bouton = etat_bouton;
 }
 ```
 
@@ -465,23 +464,25 @@ void loop() {
 ```arduino
 #include <Bounce2.h>
 
-const int button_pin = 2;
-const int led_pin = 8;
+const int broche_bouton = 2;
+const int broche_led = 8;
 
-Bounce button;
+Bounce bouton;  // création de l'objet Bounce représentant le bouton
 
 void setup() {
-    button.attach(button_pin, INPUT);
-    pinMode(led_pin, OUTPUT);
+    bouton.attach(broche_bouton, INPUT);
+    pinMode(broche_led, OUTPUT);
 }
 
 void loop() {
-    static int led_state = LOW;
+    static int etat_LED = LOW;
 
-    button.update();
-    if (button.rose()) {
-        led_state = led_state==HIGH ? LOW : HIGH;
-        digitalWrite(led_pin, led_state);
+    bouton.update();  // toujours appeler ça régulièrement
+
+    // Quand on appuie sur le bouton, changer l'état de la LED.
+    if (bouton.rose()) {
+        etat_LED = etat_LED==HIGH ? LOW : HIGH;
+        digitalWrite(broche_led, etat_LED);
     }
 }
 ```
@@ -498,11 +499,11 @@ Lecture bloquante :
 void loop() {
     // Attendre des données sur le port série.
     while (Serial.available() == 0)
-        ;
+        { /* attendre... */ }
 
     // Lire une commande et l'exécuter.
-    String command = Serial.readString();
-    interpret(command);
+    String commande = Serial.readString();
+    interpret(commande);
 }
 ```
 
@@ -514,17 +515,17 @@ Note: readString() est aussi bloquant → timeout.
 
 ```arduino
 void loop() {
-    static char buffer[80];
-    static size_t buffer_pos = 0;
+    static char tampon[80];        // stockage des caractères reçus
+    static size_t pos_tampon = 0;  // nombre de caractères reçus
 
     if (Serial.available()) {
-        char c = Serial.read();
-        if (c == '\n') {
-            buffer[buffer_pos] = '\0';  // terminer la chaîne
-            interpret(buffer);
-            buffer_pos = 0;  // préparer la prochaine lecture
-        } else if (buffer_pos < sizeof buffer - 1) {
-            buffer[buffer_pos++] = c;
+        char c = Serial.read();         // nouveau caractère reçu
+        if (c == '\n') {                // fin de ligne
+            tampon[pos_tampon] = '\0';  // terminer la chaîne
+            interprete(tampon);
+            pos_tampon = 0;             // préparer la prochaine lecture
+        } else if (pos_tampon < sizeof tampon - 1) {
+            tampon[pos_tampon++] = c;   // ajouter au tampon
         }
     }
 }

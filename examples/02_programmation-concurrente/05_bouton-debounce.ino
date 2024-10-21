@@ -15,13 +15,13 @@ void setup() {
 }
 
 void loop() {
-    static int led_state = LOW;
+    static int etat_LED = LOW;
 
     bouton.update();  // toujours appeler ça régulièrement
 
     // Quand on appuie sur le bouton, changer l'état de la LED.
     if (bouton.rose()) {
-        led_state = led_state==HIGH ? LOW : HIGH;
-        digitalWrite(broche_led, led_state);
+        etat_LED = etat_LED==HIGH ? LOW : HIGH;
+        digitalWrite(broche_led, etat_LED);
     }
 }
