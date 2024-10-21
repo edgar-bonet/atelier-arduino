@@ -62,18 +62,22 @@ Note: Les questions ne sont pas posées en termes de parallélisme.
 
 <!--vertical-->
 
-### Stratégies pour gérer des tâches parallèles
+### Stratégies pour gérer des tâches concurrentes
 
 1. Un processus/thread par tâche
   * optimal pour tâches lourdes sur un processeur multi-cœur
   * nécessite un OS (ordonnanceur)
   * coût en mémoire (une pile par thread)
+  * **complexité** : synchronisation
 2. Gérer des évènements successif dans un thread unique
   * optimal quand la gestion d'un évènement est légère
   * faible coût en mémoire et CPU
+  * **complexité** : machines à états
   * approche populaire pour le Web (Nginx, Node.js...)
 
-Note: On demande à un Arduino des tâches simples (< 1 ms).  
+Note: Les threads peuvent être plus simples, mais la synchronisation est
+difficile à déboguer  
+On demande à un Arduino des tâches simples (< 1 ms).  
 Il passe le plus clair de son temps à attendre.
 
 <!--horizontal-->
@@ -99,7 +103,8 @@ void loop() {
 
 Exercices :
 * Charger et exécuter ce programme
-* Faire clignoter deux LED : une en triolets et une en temps binaire.
+* Algo pour faire clignoter deux LED : une en triolets et une en temps
+  binaire.
 
 Note: demander solution bloquante (algo seul)
 
@@ -172,7 +177,7 @@ But : quand on appuie sur un bouton, le moteur tourne trois secondes.
 void loop() {
     // Attendre la pression sur le bouton.
     while (digitalRead(button_pin) == LOW)
-        ;
+        { /* attendre... */ }
 
     // Allumer le moteur pendant trois secondes.
     digitalWrite(motor_pin, HIGH);
@@ -181,8 +186,8 @@ void loop() {
 }
 ```
 
-Exercice : Implémenter cette fonctionnalité tout en faisant clignoter la
-LED.
+Comment implémenter cette fonctionnalité tout en faisant clignoter la
+LED ?
 
 Note: La LED « heartbeat » témoigne que le programme ne s'est pas
 bloqué.
@@ -195,6 +200,7 @@ bloqué.
 void loop() {
     static bool motor_is_running = false;
     static uint32_t time_turned_on = 0;
+
     if (!motor_is_running && digitalRead(button_pin) == HIGH) {
         digitalWrite(motor_pin, HIGH);
         motor_is_running = true;
@@ -208,6 +214,7 @@ void loop() {
 ```
 
 Note: **dans examples/**  
+signification de `static`  
 L'évènement qu'on attend, et la réponse, dépendent de l'état du
 système.
 
@@ -226,7 +233,8 @@ deux états :
 * les évènements déclenchent des transitions
 * les actions de l'automate sont associées aux transitions
 
-Note: Différence avec organigramme (flowchart).
+Note: automate fini = machine à états finie  
+Différence avec organigramme (flowchart).
 
 <!--horizontal-->
 
@@ -321,7 +329,7 @@ Recette pour convertir un code bloquant en automate fini :
 * faire de chaque attente un état
 
 Note: **dans examples/**  
-Structure switch/case utilisable pour toute automate fini.  
+Structure switch/case utilisable pour tout automate fini.  
 Comment ajouter un bouton d'appel piétons ?
 
 <!--vertical-->
@@ -348,7 +356,8 @@ pas pris en compte.
 
 ![](img/feu_tricolore-4.png)
 
-Note: La transition VERT\_APPEL → ORANGE peut être instantanée  
+Note: La transition VERT\_APPEL → ORANGE peut être instantanée
+(l'état VERT\_APPEL est alors éphémère)  
 Le diagramme d'état sert à affiner le cahier des charges.
 
 <!--horizontal-->
@@ -407,17 +416,16 @@ void loop() {
 }
 ```
 
-Note: **dans examples/**
+Note: **dans examples/**  
+L'état est dans **deux** variables d'état (lesquelles ?)
 
 <!--horizontal-->
 
 ## Moteur de portail
 
-<div style="float: right">
-![](img/portail.png)
-</div>
-
 Programmer cet automate.
+
+![](img/portail.png)
 
 Note: Et si on appuie sur le bouton quand le portail est en mouvement ?
 
