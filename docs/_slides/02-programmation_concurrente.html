@@ -359,25 +359,25 @@ Le diagramme d'état sert à affiner le cahier des charges.
 ```arduino
 #include <Servo.h>
 
-Servo myservo; 
+Servo mon_servo;
 
 void setup() {
-    myservo.attach(4);
+    mon_servo.attach(4);
 }
 
 void loop() {
-    for (int i = 2; i <= 180; i += 2) {
-        myservo.write(i);
+    for (int position = 2; position <= 180; position += 2) {
+        mon_servo.write(position);
         delay(20);
     }
-    for (int i = 178; i >= 0; i -= 2) {
-        myservo.write(i);
+    for (int position = 178; position >= 0; position -= 2) {
+        mon_servo.write(position);
         delay(20);
     }
 }
 ```
 
-Note: Il y a 180 états.
+Note: Il y a 360 états.
 
 <!--horizontal-->
 
