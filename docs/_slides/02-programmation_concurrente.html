@@ -123,7 +123,7 @@ void setup() {
 void loop() {
     unsigned long maintenant = millis();  // l'heure actuelle
 
-    if (maintenant - temps_dernier_changement  >= 400) {  // est-il temps de changer d'état ?
+    if (maintenant - temps_dernier_changement >= 400) {  // est-il temps de changer d'état ?
         temps_dernier_changement = maintenant;
         if (etat_LED == LOW) {  // calculer le nouvel état
             etat_LED = HIGH;
