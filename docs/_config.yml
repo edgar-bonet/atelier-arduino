@@ -41,6 +41,9 @@ collections:
   slides:
     output: true
 
+# Publish presentations with a future date
+future: true
+
 # Exclude directories and/or files from the conversion
 exclude:
   - Gemfile*
