@@ -19,24 +19,26 @@ void loop() {
     static int position = 0;
     static uint32_t temps_dernier_pas = 0;
 
-    if (millis() - temps_dernier_pas >= duree_pause) {
-        temps_dernier_pas += duree_pause;
-
-        // Calculer le prochain état.
-        switch (direction) {
-            case AVANCE:
+    switch (direction) {
+        case AVANCE:
+            if (millis() - temps_dernier_pas >= duree_pause) {
+                temps_dernier_pas += duree_pause;
                 position += pas_servo;
-                if (position >= 180)
-                    direction = RECULE;
-                break;
-            case RECULE:
+                mon_servo.write(position);
+            }
+            if (position >= 180) {
+                direction = RECULE;
+            }
+            break;
+        case RECULE:
+            if (millis() - temps_dernier_pas >= duree_pause) {
+                temps_dernier_pas += duree_pause;
                 position -= pas_servo;
-                if (position <= 0)
-                    direction = AVANCE;
-                break;
-        }
-
-        // Appliquer l'état calculé.
-        mon_servo.write(position);
+                mon_servo.write(position);
+            }
+            if (position <= 0) {
+                direction = AVANCE;
+            }
+            break;
     }
 }
