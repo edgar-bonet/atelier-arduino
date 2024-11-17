@@ -1,0 +1,524 @@
+---
+layout: reveal
+title: Atelier Arduino – Interruptions
+description: >
+    Découverte du mécanisme d'interruptions dans l'Arduino : principe de
+    fonctionnement, avantages et inconvénients par rapport au polling,
+    quand et comment utiliser les interruptions. Découverte des bonnes
+    pratiques par des exercices.
+date: 2024-11-23
+---
+## Atelier Arduino – Interruptions
+
+![](img/Arduino_uno_r3.jpg)  
+<small>Arduino Uno R3 – © Maker Media GmbH – CC BY-SA 4.0</small>
+
+Edgar Bonet
+
+CCSTI Grenoble – 2024-11-23
+
+<!--horizontal-->
+
+## Présentation
+
+<img src="img/avatar.jpeg" style="float: right">
+* Edgar Bonet
+  * physicien, spécialisé dans le magnétisme
+  * libriste de longue date
+  * contributeur fréquent à [Arduino Stackexchange][ase]
+  * [contributeur occasionnel][pr] à l'écosystème Arduino
+* [Laboratoire Ouvert Grenoblois][log]
+  * hackerspace grenoblois
+  * partage de connaissances et savoir-faire
+* [La Casemate][ccsti]
+  * premier CCSTI créé en France
+  * expositions, rencontres, ateliers, FabLab...
+
+[ase]: https://arduino.stackexchange.com/
+[pr]: https://github.com/pulls?q=author%3Aedgar-bonet+is%3Apr+is%3Amerged+org%3Aadafruit+org%3Aarduino+org%3Aarduino-libraries
+[log]: https://www.logre.eu/
+[ccsti]: https://lacasemate.fr/
+
+Note: Faire tour de table pour se présenter.  
+Dire : attentes, expérience en programmation Arduino, évènementielle,
+machines à états.
+
+<!--horizontal-->
+
+## Rappel – programmation non bloquante
+
+```c++
+void loop() {
+    if (évènement_machin_est_arrivé()) {
+        gérer_évènement_machin();
+    }
+
+    if (évènement_bidule_est_arrivé()) {
+        gérer_évènement_bidule();
+    }
+
+    if (évènement_truc_est_arrivé()) {
+        gérer_évènement_truc();
+    }
+
+    // etc.
+}
+```
+
+Problème : parfois on ne peut pas attendre un tour de boucle.
+
+Note: C'est de la scrutation.
+
+<!--horizontal-->
+
+## Analogie – scrutation
+
+<div style="float: right; width: 800px; height: 800px"></div>
+<img src="img/Femme-livre-téléphone-Julie-Mezua.jpg"
+style="position: absolute; bottom: 28px; right: 0; z-index: 1">
+
+```c++
+void setup() {
+    s_installer_près_du_téléphone();
+}
+
+void loop() {
+    lire_une_page();
+    if (le_téléphone_sonne()) {
+        répondre_au_téléphone();
+    }
+}
+```
+
+Note: Problèmes :
+ * latence
+ * inefficacité
+
+On **prête** notre attention au téléphone.
+
+<!--vertical-->
+
+## Analogie – interruption
+
+<div style="float: right; width: 800px; height: 800px"></div>
+<img src="img/Femme-livre-téléphone-Julie-Mezua.jpg"
+style="position: absolute; bottom: 28px; right: 0; z-index: 1">
+
+```c++
+void setup() {
+    s_installer_près_du_téléphone();
+    attachInterrupt(LE_TÉLÉPHONE_SONNE, répondre_au_téléphone);
+}
+
+void loop() {
+    lire_une_page();
+}
+```
+
+Pré-condition : support matériel dans le processeur.
+
+Note: Mécanisme introduit en 1954 d'après Wikipedia  
+Il a existé depuis des processeurs sans interruptions
+(6507, dans Atari 2600)  
+Le téléphone **attire** notre attention.
+
+<!--vertical-->
+
+## Analogie – chronogrammes
+
+Scrutation :
+
+```
+                                             début de sonnerie
+                                             ↓
+┌─────────┬───┬─────────┬───┬─────────┬───┬─────────┬───┬──────────┬─────────┐
+│  lire   │ é │  lire   │ é │  lire   │ é │  lire   │ é │ répondre │  lire   │
+└─────────┴───┴─────────┴───┴─────────┴───┴─────────┴───┴──────────┴─────────┘
+é = écouter
+```
+
+Interruption :
+
+```
+                                             début de sonnerie
+                                             ↓
+┌─────────┬─────────┬─────────┬─────────┬────┬──────────┬─────┬─────────┬─────────┐
+│  lire   │  lire   │  lire   │  lire   │  li│ répondre │re   │  lire   │  lire   │
+└─────────┴─────────┴─────────┴─────────┴────┴──────────┴─────┴─────────┴─────────┘
+```
+
+<!--horizontal-->
+
+## Vecteurs d'interruption de l'ATmega328P
+
+| A. core | no. | nom    | définition                     |
+|:-:|---:|---------------|--------------------------------|
+| • |  1 | INT0          | External Interrupt Request 0   |
+| • |  2 | INT1          | External Interrupt Request 1   |
+|   |  3 | PCINT0        | Pin Change Interrupt Request 0 |
+|   |  4 | PCINT1        | Pin Change Interrupt Request 1 |
+|   |  5 | PCINT2        | Pin Change Interrupt Request 2 |
+|   |  6 | WDT           | Watchdog Time-out Interrupt    |
+| • |  7 | TIMER2\_COMPA | Timer/Counter2 Compare Match A |
+|   |  8 | TIMER2\_COMPB | Timer/Counter2 Compare Match B |
+|   |  9 | TIMER2\_OVF   | Timer/Counter2 Overflow        |
+|   | 10 | TIMER1\_CAPT  | Timer/Counter1 Capture Event   |
+|   | 11 | TIMER1\_COMPA | Timer/Counter1 Compare Match A |
+|   | 12 | TIMER1\_COMPB | Timer/Counter1 Compare Match B |
+|   | 13 | TIMER1\_OVF   | Timer/Counter1 Overflow        |
+
+Note: utilisés par :
+ * `attachInterrupt()`
+ * `tone()`
+
+<!--vertical-->
+
+## Vecteurs d'interruption de l'ATmega328P – suite
+
+| A. core | no. | nom    | définition                     |
+|:-:|---:|---------------|--------------------------------|
+|   | 14 | TIMER0\_COMPA | Timer/Counter0 Compare Match A |
+|   | 15 | TIMER0\_COMPB | Timer/Counter0 Compare Match B |
+| • | 16 | TIMER0\_OVF   | Timer/Counter0 Overflow        |
+|   | 17 | SPI\_STC      | SPI Serial Transfer Complete   |
+| • | 18 | USART\_RX     | USART Rx Complete              |
+| • | 19 | USART\_UDRE   | USART Data Register Empty      |
+|   | 20 | USART\_TX     | USART Tx Complete              |
+|   | 21 | ADC           | ADC Conversion Complete        |
+|   | 22 | EE\_READY     | EEPROM Ready                   |
+|   | 23 | ANALOG\_COMP  | Analog Comparator              |
+|   | 24 | TWI           | 2-wire Serial Interface        |
+|   | 25 | SPM\_READY    | Store Program Memory Ready     |
+
+Note: utilisés par :
+ * `millis()`, `micros()`, `delay()`
+ * `Serial`
+
+<!--horizontal-->
+
+## Appel de fonction v.s. interruption
+
+Appel de fonction :
+
+```yaml
+loop:
+    bla
+    bla                   ma_fonction:
+    bla                 ┌───▶ bla
+    call ma_fonction ───┘     bla
+    bla ◀─────────┐           bla
+    bla           └────────── ret
+    bla
+    ...
+```
+
+Interruption :
+
+```yaml
+loop:
+    bla                   __vector_42:
+    bla    interruption ┌───▶ bla
+    bla ────────────────┘     bla
+    bla ◀─────────┐           bla
+    bla           └────────── reti
+    bla
+    ...
+```
+
+Note: Registre PC est sauvegardé/restauré de la même manière.  
+L'appel de fonction arrive au moment prévu par le programmeur.  
+L'interruption peut arriver avant n'importe quelle instruction.
+
+<!--horizontal-->
+
+## Logique de déclenchement d'une interruption
+
+![Schéma logique du contrôle de l'interruption](img/int-logique.png)
+
+Note: L'ordre d'allumage des bits n'est pas important.  
+Les interruptions ne sont pas interruptibles → différence `ret`/`reti`  
+Notion d'interruption en attente.
+
+<!--horizontal-->
+
+## Mise en œuvre des interruptions – via Arduino core
+
+Interruptions externes : le core fournit la fonction
+[attachInterrupt()][].
+
+```c++
+const uint8_t broche_bouton = 2;
+const uint8_t numero_interruption = digitalPinToInterrupt(broche_bouton);
+
+// Gestionnaire d'interruption.
+void mettre_a_jour_led() {
+    digitalWrite(LED_BUILTIN, digitalRead(broche_bouton));
+}
+
+void setup() {
+    pinMode(broche_bouton, INPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
+    attachInterrupt(numero_interruption, mettre_a_jour_led, CHANGE);
+}
+
+void loop() {}
+```
+
+**Exercice**: Utiliser des interruptions séparées pour allumer et
+éteindre la LED (modes `RISING` et `FALLING`).
+
+[attachInterrupt()]: https://docs.arduino.cc/language-reference/en/functions/external-interrupts/attachInterrupt/
+
+Note: `01_led-bouton.ino`
+
+<!--vertical-->
+
+## Mise en œuvre des interruptions – via une bibliothèque
+
+Gestionnaire de bibliothèques : téléchager [TimerOne][].
+
+```c++
+#include <TimerOne.h>
+
+// Gestionnaire d'interruption.
+void commuter_LED() {
+    static uint8_t etat_LED = LOW;
+    if (etat_LED == LOW) {
+        etat_LED = HIGH;
+    } else {
+        etat_LED = LOW;
+    }
+    digitalWrite(LED_BUILTIN, etat_LED);
+}
+
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+    Timer1.initialize(400000);  // période = 400 000 µs = 0,4 s
+    Timer1.attachInterrupt(commuter_LED);
+}
+
+void loop() {}
+```
+
+**Exercice**: Installer TimerOne et tester ce programme.
+
+[TimerOne]: https://www.pjrc.com/teensy/td_libs_TimerOne.html
+
+Note: `02_timer-one.ino`
+
+<!--vertical-->
+
+## Mise en œuvre des interruptions – façon « bare metal »
+
+```c++
+const char message[] = "Lorem ipsum dolor sit amet, consectetur "
+    "adipiscing elit. Pellentesque euismod, velit ut rutrum faucibus, "
+    "ipsum lorem sodales magna, vitae feugiat est ac risus.";
+
+// Gestionnaire de l'interruption « transmit complete ».
+ISR(USART_TX_vect) {
+    digitalWrite(LED_BUILTIN, HIGH);
+}
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(LED_BUILTIN, OUTPUT);
+    UCSR0B |= bit(TXCIE0);  // activer interruption USART_TX
+}
+
+void loop() {
+    Serial.println(message);
+    delay(500);
+    digitalWrite(LED_BUILTIN, LOW);
+}
+```
+
+Il faut lire [la fiche technique du microcontrôleur][datasheet]
+(seulement 653 pages).
+
+[datasheet]: https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf
+
+Note: `03_flash-apres-tx.ino`  
+Deux étapes:
+* définir l'ISR avec le bon nom
+* activer l'interruption via les registres de contrôle
+
+Utile pour contrôler ligne DE d'un transceiver RS-485.
+
+<!--vertical-->
+
+## Implémentation de attachInterrupt()
+
+D'après [ArduinoCore-avr][]:
+
+```c++
+static void nothing() {};
+
+volatile voidFuncPtr intFunc[2] = { nothing, nothing };
+
+ISR(INT0_vect) { intFunc[0](); }
+ISR(INT1_vect) { intFunc[1](); }
+
+void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int mode) {
+    intFunc[interruptNum] = userFunc;
+    switch (interruptNum) {
+        case 0:
+            EICRA = (EICRA & ~(bit(ISC00) | bit(ISC01))) | (mode << ISC00);
+            EIMSK |= bit(INT0);
+            break;
+        case 1:
+            EICRA = (EICRA & ~(bit(ISC10) | bit(ISC11))) | (mode << ISC10);
+            EIMSK |= bit(INT1);
+            break;
+    }
+}
+```
+
+[ArduinoCore-avr]: https://github.com/arduino/ArduinoCore-avr/blob/1.8.6/cores/arduino/WInterrupts.c
+
+<!--horizontal-->
+
+## Interruptions du Timer 0
+
+On peut avoir « gratuitement » des interruptions toutes les 1 024 µs :  
+TIMER0\_COMPA (PWM 6) et TIMER0\_COMPB (PWM 5).
+
+```c++
+bool fini = false;  // est-ce que l'attente est finie ?
+
+// Gestionnaire d'interruption appelé toutes les 1,024 ms.
+ISR(TIMER0_COMPA_vect) { fini = true; }
+
+void setup() {
+    Serial.begin(9600);
+    Serial.println("En attente...");
+    TIMSK0 |= bit(OCIE0A);  // activer l'interruption TIMER0_COMPA
+    while (!fini) {
+        /* attendre... */
+    }
+    Serial.println(" fini!");
+}
+
+void loop() {}
+```
+
+**Exercice**: tester ce programme.
+
+Note: `04_timer-0.ino`  
+Optimisation 1 :
+```c
+register bool fini_copie = fini;
+while (!fini_copie) { ... }
+```
+Optimisation 2 (inutile d'en parler) : `if (!fini) while (true) {}`  
+Solution : `volatile bool fini = false;`
+
+<!--horizontal-->
+
+## Durée d'exécution d'une ISR
+
+```c++
+const uint32_t periode_de_commutation = 400;
+
+// Gestionnaire d'interruption sur conversion ADC terminée.
+ISR(ADC_vect) { delayMicroseconds(0); }
+
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+    ADCSRA |= bit(ADIE);  // activer l'interruption ADC
+}
+
+void loop() {
+    static uint32_t temps_dernier_changement = 0;
+    static uint8_t etat_LED = LOW;
+    if (millis() - temps_dernier_changement >= periode_de_commutation) {
+        temps_dernier_changement += periode_de_commutation;
+        etat_LED = etat_LED==LOW ? HIGH : LOW;
+        digitalWrite(LED_BUILTIN, etat_LED);
+    }
+
+    analogRead(A0);  // provoque l'exécution de ISR(ADC_vect)
+    delayMicroseconds(0);
+}
+```
+
+**Exercice**: varier tour à tour chacun des délais. À partir de quand le
+rythme de la LED est visiblement perturbé ?  
+Essayer ≥ 1 000 µs.
+
+Note: `05_duree-isr.ino`
+
+<!--horizontal-->
+
+## Cohérence des données
+
+```c++
+volatile uint32_t counter;
+
+ISR(TIMER0_COMPA_vect) {
+    if (counter == 0xffffffff)
+        counter =  0x00000000;
+    else
+        counter += 0x01010101;
+}
+
+void setup() {
+    TIMSK0 |= bit(OCIE0A);
+    Serial.begin(9600);
+    Serial.println("Ready");
+}
+
+void loop() {
+    union {
+        uint32_t value;
+        uint8_t bytes[4];
+    } data;
+    data.value = counter;
+    for (int i = 1; i < 4; i++) {
+        if (data.bytes[i] != data.bytes[0]) {
+            Serial.println(data.value, HEX);
+            break;
+        }
+    }
+    delayMicroseconds(500);
+}
+```
+
+**Exercice**: Tester et corriger ce programme.
+
+Note: `06_coherence-donnees.ino`  
+C'est une « race condition » → erreurs sporadiques  
+C.f. Therac-25 en 1985–1987.  
+Notion d'accès « atomique » = « insécable »  
+Notion de « section critique ».
+
+<!--horizontal-->
+
+## Réentrance
+
+Les fonctions manipulant des ressources globales sont non réentrantes :
+
+**Fonctions manipulant** :
+* des variables globales
+* des variables locales `static`
+
+**Fonctions de bibliothèque** :
+* opérateurs `new`, `delete`
+* `rand()`, `srand()`, `random()`, `randomSeed()`
+* `strtok()`
+* fonctions modifiant `errno`
+* tout ce qui accède au matériel (`Serial.*()`...)
+* ...
+
+<!--horizontal-->
+
+## Résumé
+
+* Les gestionnaires d'interruption doivent:
+  * être courts
+  * appeler uniquement des fonctions réentrantes
+* les variables partagées avec le reste du programme doivent:
+  * être déclarées `volatile`
+  * être accédées de façon atomique (section critique si nécessaire)
+
+⇒ Préférer la scrutation quand c'est possible.
