@@ -1,14 +1,6 @@
 /*
  * What happens if a non-atomic variable is not protected?
  */
-#define NO_ATOMIC
-
-#ifdef NO_ATOMIC
-# undef noInterrupts
-# define noInterrupts()
-# undef interrupts
-# define interrupts()
-#endif
 
 volatile uint32_t counter;
 
@@ -30,9 +22,7 @@ void loop() {
         uint32_t value;
         uint8_t bytes[4];
     } data;
-    noInterrupts();
     data.value = counter;
-    interrupts();
     for (int i = 1; i < 4; i++) {
         if (data.bytes[i] != data.bytes[0]) {
             Serial.println(data.value, HEX);

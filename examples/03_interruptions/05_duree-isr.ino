@@ -17,11 +17,7 @@ void loop() {
     static uint8_t etat_LED = LOW;
     if (millis() - temps_dernier_changement >= periode_de_commutation) {
         temps_dernier_changement += periode_de_commutation;
-        if (etat_LED == LOW) {
-            etat_LED = HIGH;
-        } else {
-            etat_LED = LOW;
-        }
+        etat_LED = etat_LED==LOW ? HIGH : LOW;
         digitalWrite(LED_BUILTIN, etat_LED);
     }
 
