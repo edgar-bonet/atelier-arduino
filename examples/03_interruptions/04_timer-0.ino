@@ -1,5 +1,5 @@
 /*
- * What happens if we forget `volatile`?
+ * Profiter d'une interruption du timer 0.
  */
 
 bool fini = false;  // est-ce que l'attente est finie ?

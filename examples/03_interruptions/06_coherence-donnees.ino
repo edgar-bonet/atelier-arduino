@@ -1,5 +1,6 @@
 /*
- * What happens if a non-atomic variable is not protected?
+ * Test de cohérence des données : les quatre octets de `counter'
+ * doivent être identiques.
  */
 
 volatile uint32_t counter;

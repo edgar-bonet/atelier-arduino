@@ -1,5 +1,5 @@
 /*
- * What happens when an ISR takes too long.
+ * Tester la durée d'exécution d'une ISR.
  */
 
 const uint32_t periode_de_commutation = 400;

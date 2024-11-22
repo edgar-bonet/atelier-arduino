@@ -1,5 +1,5 @@
 /*
- * Flasher la LED après transmission série.
+ * Flasher la LED après une transmission série.
  */
 
 const char message[] = "Lorem ipsum dolor sit amet, consectetur "

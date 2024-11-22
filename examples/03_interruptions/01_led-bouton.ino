@@ -1,5 +1,5 @@
 /*
- * Control an LED with buttons and interrupts.
+ * Contrôler une LED avec un bouton et des interruptions.
  */
 
 const uint8_t broche_bouton = 2;
