@@ -2,24 +2,24 @@
 
 Ce dépôt contient les sources des documents que j'ai préparés pour des
 ateliers d'initiation Arduino au [CCSTI Grenoble « La
-Casemate »][casemate]. Pour le premier de ces ateliers (niveau
-initiation), deux séances ont eu lieu, les 3 novembre 2022 et
-30 mars 2023. Use session de « niveau 2 » a eu lieu le 6 janvier 2024.
+Casemate »][casemate]. Ces ateliers ont lieu depuis novembre 2022. Ils
+se déclinent en trois niveaux de difficulté croissante.
 
 ## Contenu
 
-* [docs](docs) : sources Markdown du [support de présentation][slides]
+* [docs](docs) : sources Markdown des [supports de présentation][slides]
 * [cpp-cheatsheet](cpp-cheatsheet) : sources LaTeX du pense-bête
   Arduino/C++
 * [examples](examples) : code source des programmes d'exemple
 
-Le support de présentation est basé sur [jekyll-reveal.js][], lui même
-basé sur [reveal.js][]. Tous les fichiers du répertoire docs
+Les supports de présentation sont basés sur [jekyll-reveal.js][], lui
+même basé sur [reveal.js][]. Tous les fichiers du répertoire docs
 appartiennent au projet jekyll-reveal.js, à l'exception des
 sous-répertoires :
 
-* docs/reveal.js : sources de reveal.js
-* docs/\_posts et docs/img : le contenu spécifique à cette présentation.
+* docs/\_slides/reveal.js : sources de reveal.js
+* docs/\_slides : le contenu spécifique à ces présentations
+* docs/index.html : page listant les présentations.
 
 ## Licences
 
