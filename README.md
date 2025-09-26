@@ -23,7 +23,7 @@ sous-répertoires :
 
 ## Licences
 
-* ce dépôt : © 2022–2024 Edgar Bonet, CC-BY-SA-4.0
+* ce dépôt : © 2022–2025 Edgar Bonet, CC-BY-SA-4.0
 * jekyll-reveal.js : © 2013 Dennis Ploeger, BSD-2-Clause
 * reveal.js : © 2011–2022 Hakim El Hattab, MIT
 
